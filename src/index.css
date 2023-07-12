@@ -138,7 +138,7 @@ footer {
 /*   About page styling     */
 
 .about-img {
-    background: url('./assets/about-img-extended.png'), rgb(255, 255, 255) 50% / cover no-repeat;
+    background: url('./assets/about-img-extended.jpg'), rgb(255, 255, 255) 50% / cover no-repeat;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: top;
