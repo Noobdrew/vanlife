@@ -1,0 +1,218 @@
+:root {
+    font-family: 'inter', sans-serif;
+
+}
+
+body {
+    height: 100vh;
+    margin: 0;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin: 0;
+}
+
+a {
+    text-decoration: none;
+    color: initial;
+}
+
+.home-container {
+    height: 100%;
+}
+
+.home-main {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.46) 0%,
+            rgba(0, 0, 0, 0.46) 100%), url('./assets/home-main-img.png'),
+        lightgray 0px -65.191px / 100% 178.109% no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    height: 80vh;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+    background: #FFF7ED;
+}
+
+.home-logo {
+    margin-right: auto;
+    font-weight: 700;
+    color: #000;
+    font-size: 25.353px;
+    font-style: normal;
+    font-weight: 900;
+
+}
+
+.about {
+    margin-right: 12px;
+    color: #4D4D4D;
+    text-align: right;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22.923px;
+}
+
+.vans {
+    color: #4D4D4D;
+    text-align: right;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 22.923px;
+}
+
+
+
+.home-title {
+    margin-top: 95px;
+    color: #FFF;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 42px;
+}
+
+.home-filler-text {
+    margin-top: 20px;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+.home-find-vans {
+    cursor: pointer;
+    margin-top: 60px;
+    width: 100%;
+    max-width: 550px;
+    height: 50px;
+
+    border-radius: 5px;
+    background: #FF8C38;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 31px;
+}
+
+footer {
+    height: 6vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background: #252525;
+    color: #AAA;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+/*
+About page styling 
+*/
+
+.about-img {
+    background: url('./assets/image-55.png'), rgb(255, 255, 255) 50% / cover no-repeat;
+    background-repeat: no-repeat;
+
+    background-position: top;
+
+
+    height: 450px;
+
+}
+
+.about-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+    background: #FFF7ED
+}
+
+.about-title {
+    margin-top: 45px;
+    color: #161616;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 38px;
+
+}
+
+.about-filler-text {
+    max-width: 870px;
+    margin-top: 30px;
+    color: #161616;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
+}
+
+.about-button-conteiner {
+
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 5px;
+    background: #FFCC8D;
+}
+
+.about-button-title {
+    text-align: center;
+    color: #161616;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 30px;
+}
+
+.about-vans {
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 8px 15px;
+    border-radius: 10px;
+    background: #161616;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 15.946px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 23.919px;
+}
