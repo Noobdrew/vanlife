@@ -36,6 +36,7 @@ a {
     height: 80vh;
     padding: 30px;
     display: flex;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
@@ -81,7 +82,7 @@ nav {
 
 
 .home-title {
-    margin-top: 95px;
+    text-align: center;
     color: #FFF;
     font-size: 36px;
     font-style: normal;
@@ -96,6 +97,7 @@ nav {
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+    text-align: center;
     line-height: 24px;
 }
 
@@ -133,14 +135,12 @@ footer {
     line-height: 22px;
 }
 
-/*
-About page styling 
-*/
+/*   About page styling     */
 
 .about-img {
-    background: url('./assets/image-55.png'), rgb(255, 255, 255) 50% / cover no-repeat;
+    background: url('./assets/about-img-extended.png'), rgb(255, 255, 255) 50% / cover no-repeat;
     background-repeat: no-repeat;
-
+    background-size: cover;
     background-position: top;
 
 
@@ -215,4 +215,53 @@ About page styling
     font-style: normal;
     font-weight: 700;
     line-height: 23.919px;
+}
+
+
+/*   Vans page styling     */
+
+.van-page {
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF7ED;
+
+}
+
+.vans-title {
+    padding: 20px;
+    color: #161616;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 33.652px;
+}
+
+.filters {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 20px;
+    padding: 20px;
+}
+
+.filters>button {
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #FFEAD0;
+    border: none;
+    width: 104px;
+    height: 37px;
+    padding: 3px 10px;
+
+}
+
+.filters .filters-clear {
+    background-color: #FFF7ED;
+    color: #4D4D4D;
+    white-space: nowrap;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 23.919px;
+    text-decoration-line: underline;
 }

@@ -10,7 +10,10 @@ export default function Navbar() {
       <p className="about">
         <Link to="/about">About</Link>
       </p>
-      <p className="vans">Vans</p>
+      <p className="vans">
+        {" "}
+        <Link to="/vans">Vans</Link>
+      </p>
     </nav>
   );
 }
