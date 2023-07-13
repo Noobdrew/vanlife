@@ -11,7 +11,6 @@ export default function Home() {
         </p>
         <button className="home-find-vans">Find your van</button>
       </main>
-      <footer className="home-footer">Ⓒ 2022 #VANLIFE</footer>
     </div>
   );
 }

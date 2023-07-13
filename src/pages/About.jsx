@@ -21,7 +21,6 @@ export default function About() {
           <button className="about-vans">Explore our vans</button>
         </div>
       </main>
-      <footer className="home-footer">Ⓒ 2022 #VANLIFE</footer>
     </div>
   );
 }

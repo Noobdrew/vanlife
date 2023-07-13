@@ -6,8 +6,8 @@
 body {
     height: 100vh;
     margin: 0;
-
 }
+
 
 h1,
 h2,
@@ -21,6 +21,7 @@ a {
     text-decoration: none;
     color: initial;
 }
+
 
 .home-container {
     height: 100%;
@@ -221,9 +222,11 @@ footer {
 /*   Vans page styling     */
 
 .van-page {
+    min-height: 85vh;
     display: flex;
     flex-direction: column;
     background-color: #FFF7ED;
+    padding-bottom: 50px;
 
 }
 
@@ -264,4 +267,93 @@ footer {
     font-weight: 500;
     line-height: 23.919px;
     text-decoration-line: underline;
+}
+
+/*  Van Element styles  */
+
+main.vans-container {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.van-element {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+}
+
+.van-element img {
+    border-radius: 5px;
+    width: 100%;
+}
+
+.van-element .name {
+    color: #161616;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 31.662px;
+}
+
+.van-element .first-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.van-element .price {
+    display: flex;
+    flex-direction: column;
+}
+
+.van-type {
+    margin-top: 5px;
+    color: #FFEAD0;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 31.662px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    background: #E17654;
+}
+
+
+.van-type.rugged {
+    background-color: #115E59;
+}
+
+.van-type.simple {
+    background-color: #E17654;
+}
+
+
+.van-type.luxury {
+    background-color: #161616;
+}
+
+
+@media (min-width:900px) {
+    .filters {
+        width: 650px;
+        justify-content: space-between;
+    }
+
+    main.vans-container {
+
+        gap: 50px;
+
+    }
+
+    .van-element {
+        width: 300px;
+    }
 }
