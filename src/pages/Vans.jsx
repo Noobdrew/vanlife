@@ -12,13 +12,15 @@ export default function Vans() {
 
   const VanElements = vanData.map((van) => {
     return (
-      <VanElement
-        key={van.id}
-        img={van.imageUrl}
-        name={van.name}
-        price={van.price}
-        type={van.type}
-      />
+      <Link to={`/vans/${van.id}`}>
+        <VanElement
+          key={van.id}
+          img={van.imageUrl}
+          name={van.name}
+          price={van.price}
+          type={van.type}
+        />
+      </Link>
     );
   });
 
