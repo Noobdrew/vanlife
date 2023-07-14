@@ -1,17 +1,37 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
+  const activeStyle = {
+    fontWeight: "bold",
+    textDecoration: "underline",
+    color: "#161616",
+  };
   return (
-    <nav>
-      <h2 className="home-logo">
-        <Link to="/">VANLIFE</Link>
-      </h2>
-      <p className="about">
-        <Link to="/about">About</Link>
-      </p>
-      <p className="vans">
-        <Link to="/vans">Vans</Link>
-      </p>
-    </nav>
+    <header>
+      <NavLink className="home-logo" to="/">
+        VANLIFE
+      </NavLink>
+
+      <NavLink
+        to="/host"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
+        Host
+      </NavLink>
+
+      <NavLink
+        to="/about"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
+        About
+      </NavLink>
+
+      <NavLink
+        to="/vans"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
+        Vans
+      </NavLink>
+    </header>
   );
 }

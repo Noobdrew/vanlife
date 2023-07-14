@@ -6,6 +6,7 @@
 body {
     height: 100vh;
     margin: 0;
+    background: #FFF7ED;
 }
 
 
@@ -22,6 +23,11 @@ a {
     color: initial;
 }
 
+.site-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
 .home-container {
     height: 100%;
@@ -44,19 +50,19 @@ a {
 
 
 
-nav {
+header {
     display: flex;
     align-items: center;
-    padding: 20px 20px;
+    padding: 20px 5px;
     background: #FFF7ED;
 }
 
-nav a:hover {
+header a:hover {
     color: #161616;
     text-decoration: underline;
 }
 
-.home-logo {
+header .home-logo {
     margin-right: auto;
     font-weight: 700;
     color: #000;
@@ -66,27 +72,17 @@ nav a:hover {
 
 }
 
-.about {
-    margin-right: 12px;
+header a {
+    text-decoration: none;
     color: #4D4D4D;
-    text-align: right;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 22.923px;
+    padding: 0px 10px;
 }
 
-.vans {
-    color: #4D4D4D;
-    text-align: right;
-    font-family: Inter;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 22.923px;
+header a:hover {
+    color: #161616;
+    text-decoration: underline;
 }
-
 
 
 .home-title {
@@ -135,19 +131,15 @@ nav a:hover {
 }
 
 footer {
-    height: 6vh;
+    background-color: #161616;
+    color: #AAAAAA;
+    height: 55px;
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
-    flex-shrink: 0;
-    background: #252525;
-    color: #AAA;
-    text-align: center;
-    font-family: Inter;
-    font-size: 14px;
-    font-style: normal;
+    margin-top: auto;
     font-weight: 500;
-    line-height: 22px;
 }
 
 /*   About page styling     */
@@ -479,4 +471,23 @@ main.vans-container {
         margin-left: 150px;
         margin-top: 50px;
     }
+}
+
+/*   Host styling   */
+
+.host-nav {
+    display: flex;
+}
+
+.host-nav a {
+    text-decoration: none;
+    color: #4D4D4D;
+    font-weight: 500;
+    padding: 5px 20px;
+}
+
+.host-nav a:hover {
+    color: #161616;
+    text-decoration: underline;
+    font-weight: 600;
 }
