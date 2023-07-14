@@ -42,11 +42,18 @@ a {
     flex-direction: column;
 }
 
+
+
 nav {
     display: flex;
     align-items: center;
     padding: 20px 20px;
     background: #FFF7ED;
+}
+
+nav a:hover {
+    color: #161616;
+    text-decoration: underline;
 }
 
 .home-logo {
@@ -108,7 +115,9 @@ nav {
     width: 100%;
     max-width: 550px;
     height: 50px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 5px;
     background: #FF8C38;
     color: #FFF;
@@ -118,6 +127,11 @@ nav {
     font-style: normal;
     font-weight: 700;
     line-height: 31px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.home-find-vans:hover {
+    background-color: #dd752b;
 }
 
 footer {
@@ -212,10 +226,15 @@ footer {
     background: #161616;
     color: #FFF;
     font-family: Inter;
-    font-size: 15.946px;
+    font-size: 15px;
     font-style: normal;
     font-weight: 700;
-    line-height: 23.919px;
+    line-height: 23px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.about-vans:hover {
+    background: #3a3939;
 }
 
 
