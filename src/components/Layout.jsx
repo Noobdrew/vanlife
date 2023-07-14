@@ -8,7 +8,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="home-footer">Ⓒ 2022 #VANLIFE</footer>
+      <footer className="home-footer">Ⓒ 2023 Ivan Marinski</footer>
     </div>
   );
 }

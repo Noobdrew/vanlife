@@ -133,7 +133,7 @@ header a:hover {
 footer {
     background-color: #161616;
     color: #AAAAAA;
-    height: 55px;
+    height: 56px;
     display: flex;
     flex-shrink: 0;
     justify-content: center;
