@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import VanElement from "../components/VanElement";
+import VanElement from "/src/components/VanElement";
 export default function Vans() {
   const [vanData, setVanData] = useState([]);
 
