@@ -163,7 +163,7 @@ footer {
 .about-main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     padding: 25px;
     background: #FFF7ED
@@ -303,16 +303,16 @@ main.vans-container {
     width: 130px;
     display: flex;
     flex-direction: column;
+    gap: 8px;
 }
 
 .van-element img {
-    border-radius: 5px;
+    border-radius: 10px;
     width: 100%;
 }
 
 .van-element .van-name {
     width: 75%;
-
     color: #161616;
     font-family: Inter;
     font-size: 20px;
@@ -460,9 +460,9 @@ main.vans-container {
 
 
     margin-top: 20px;
-    margin-bottom: 40px;
+
     border: none;
-    max-width: 500px;
+
     padding: 15px 5px;
     border-radius: 4px;
     background: #FF8C38;
@@ -484,7 +484,8 @@ main.vans-container {
         gap: 50px;
     }
 
-    .van-details-img {
+    .van-detail img {
+        border-radius: 20px;
         width: 800px;
         min-width: 350px;
     }
@@ -554,6 +555,7 @@ main.vans-container {
 
 .host-van-element img {
     width: 85px;
+    border-radius: 10px;
 }
 
 .host-van-text {
