@@ -22,7 +22,7 @@ export default function HostVansDetails() {
   }
   return (
     <>
-      <Link to="/host/vans" className="back-button">
+      <Link relative="path" to=".." className="back-button">
         &larr; <span>Back to all vans</span>
       </Link>
       <div className="host-van-details-container">

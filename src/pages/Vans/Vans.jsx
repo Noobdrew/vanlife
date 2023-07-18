@@ -3,21 +3,17 @@ import { Link, NavLink, useSearchParams } from "react-router-dom";
 import VanElement from "../../components/VanElement";
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const simpleFilter = searchParams.get("simple");
-  const ruggedFilter = searchParams.get("rugged");
-  const luxuryFilter = searchParams.get("luxury");
+  const simpleFilter = searchParams.get("t1");
+  const luxuryFilter = searchParams.get("t2");
+  const ruggedFilter = searchParams.get("t3");
+
   const condition = [
-    { simple: simpleFilter },
-    { rugged: ruggedFilter },
-    { luxury: luxuryFilter },
+    { t1: simpleFilter },
+    { t2: luxuryFilter },
+    { t3: ruggedFilter },
   ];
 
   const [vanData, setVanData] = useState([]);
-  const [filterConditions, setFilterConditions] = useState([
-    { simple: simpleFilter },
-    { rugged: ruggedFilter },
-    { luxury: luxuryFilter },
-  ]);
 
   useEffect(() => {
     fetch("/api/vans")
@@ -28,12 +24,10 @@ export default function Vans() {
   function filterByConditions(array, conditions) {
     const arr = [];
     array.forEach((item) => {
-      // Check each condition for the item
       for (let i = 0; i < conditions.length; i++) {
         const condition = conditions[i];
         const key = Object.keys(condition)[0];
         const value = condition[key];
-        // Compare the item's property with the condition
         if (item.type == value) {
           arr.push(item);
         }
@@ -47,9 +41,12 @@ export default function Vans() {
 
   const VanElements = filtered.map((van) => {
     return (
-      <Link to={`/vans/${van.id}`}>
+      <Link
+        state={{ search: `?${searchParams.toString()}` }}
+        to={`${van.id}`}
+        key={van.id}
+      >
         <VanElement
-          key={van.id}
           img={van.imageUrl}
           name={van.name}
           price={van.price}
@@ -76,33 +73,33 @@ export default function Vans() {
       <div className="filters">
         <button
           style={
-            condition[0].simple
+            condition[0].t1
               ? { backgroundColor: "#E17654", color: "#FFEAD0" }
               : {}
           }
-          onClick={() => handleFilter("simple", "simple")}
+          onClick={() => handleFilter("t1", "simple")}
           className="filters-btn simple"
         >
           Simple
         </button>
         <button
           style={
-            condition[2].luxury
+            condition[1].t2
               ? { backgroundColor: "#161616", color: "#FFEAD0" }
               : {}
           }
-          onClick={() => handleFilter("luxury", "luxury")}
+          onClick={() => handleFilter("t2", "luxury")}
           className="filters-btn luxury"
         >
           Luxury
         </button>
         <button
           style={
-            condition[1].rugged
+            condition[2].t3
               ? { backgroundColor: "#115E59", color: "#FFEAD0" }
               : {}
           }
-          onClick={() => handleFilter("rugged", "rugged")}
+          onClick={() => handleFilter("t3", "rugged")}
           className="filters-btn rugged"
         >
           Rugged

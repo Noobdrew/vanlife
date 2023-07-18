@@ -9,12 +9,15 @@ export default function HostVans() {
       .then((resp) => resp.json())
       .then((data) => setHostVans(data.vans));
   }, []);
-  console.log(hostVans);
+
   const hostVanElements = hostVans.map((van) => {
     return (
-      <Link className="host-van-element" to={`/host/vans/${van.id}`}>
+      <Link
+        key={van.id}
+        className="host-van-element"
+        to={`/host/vans/${van.id}`}
+      >
         <HostVanElement
-          key={van.id}
           img={van.imageUrl}
           name={van.name}
           price={van.price}

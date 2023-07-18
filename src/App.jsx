@@ -13,6 +13,7 @@ import HostVansDetails from "./pages/Host/HostVansDetails";
 import HostVanInfo from "./pages/Host/HostVanInfo";
 import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
+import ErrorPage from "./pages/ErrorPage";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
 
@@ -21,6 +22,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="*" element={<ErrorPage />} />
           <Route index element={<Home />} />
           <Route path="about" element={<About />} />
           <Route path="vans" element={<Vans />} />
