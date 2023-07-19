@@ -1,6 +1,12 @@
 import "./App.css";
 import "./server";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Vans from "./pages/Vans/Vans";
@@ -22,24 +28,35 @@ import { getVans } from "./api";
 const VanApiContext = createContext(null);
 function App() {
   const [vanData, setVanData] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     async function loadVans() {
+      setLoading(true);
       try {
         const data = await getVans();
         setVanData(data);
       } catch (err) {
         setError(err);
+      } finally {
+        setLoading(false);
       }
     }
 
     loadVans();
   }, []);
 
+  if (loading)
+    return (
+      <div className="loader-conteiner">
+        <h1>Building app</h1>
+        <span className="loader"></span>
+      </div>
+    );
+
   return (
-    <VanApiContext.Provider value={{ vanData, error }}>
+    <VanApiContext.Provider value={{ vanData, loading, error }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>

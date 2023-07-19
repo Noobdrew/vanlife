@@ -1,9 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Outlet, useParams, NavLink, Link } from "react-router-dom";
+import { VanApiContext } from "../../App";
+import ErrorPage from "../ErrorPage";
 
 export default function HostVansDetails() {
+  //placeholder host id
+  const hostId = 123;
   const params = useParams();
-  const [vanDetail, setVanDetail] = useState(null);
+
+  const { vanData, error } = useContext(VanApiContext);
+
+  const vanDetailArr = vanData.filter((item) => item.id == params.id);
+  const vanDetail = vanDetailArr[0];
 
   const activeStyle = {
     fontWeight: "bold",
@@ -11,15 +19,10 @@ export default function HostVansDetails() {
     color: "#161616",
   };
 
-  useEffect(() => {
-    fetch(`/api/host/vans/${params.id}`)
-      .then((resp) => resp.json())
-      .then((data) => setVanDetail(data.vans[0]));
-  }, [params.id]);
+  if (params.id > vanData.length) return <ErrorPage />;
+  if (vanDetail.hostId != hostId)
+    return <h1>Van not found in current user's vans!</h1>;
 
-  if (!vanDetail) {
-    return <h1>Loading...</h1>;
-  }
   return (
     <>
       <Link relative="path" to=".." className="back-button">

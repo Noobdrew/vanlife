@@ -16,27 +16,7 @@ export default function Vans() {
     { t3: ruggedFilter },
   ];
 
-  const { vanData, error } = useContext(VanApiContext);
-
-  // const [vanData, setVanData] = useState([]);
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState(null);
-
-  // useEffect(() => {
-  //   async function loadVans() {
-  //     setLoading(true);
-  //     try {
-  //       const data = await getVans();
-  //       setVanData(data);
-  //     } catch (err) {
-  //       setError(err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-
-  //   loadVans();
-  // }, []);
+  const { vanData, loading, error } = useContext(VanApiContext);
 
   function filterByConditions(array, conditions) {
     const arr = [];

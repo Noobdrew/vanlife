@@ -1,20 +1,20 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
+import { VanApiContext } from "../../App";
 
 export default function VanDetails() {
   const params = useParams();
-  const [van, setVan] = useState(null);
+
   const location = useLocation();
 
-  useEffect(() => {
-    fetch(`/api/vans/${params.id}`)
-      .then((reps) => reps.json())
-      .then((data) => setVan(data.vans));
-  }, [params.id]);
+  const { vanData, error } = useContext(VanApiContext);
 
+  const currentVanArr = vanData.filter((item) => item.id == params.id);
+  const currentVan = currentVanArr[0];
+  console.log(currentVan);
   return (
     <div className="van-detail-container">
-      {van ? (
+      {currentVan ? (
         <>
           <Link
             relative="path"
@@ -25,16 +25,16 @@ export default function VanDetails() {
             &larr; <span>Back to all vans</span>
           </Link>
           <div className="van-detail">
-            <img src={van.imageUrl} className="van-details-img" />
+            <img src={currentVan.imageUrl} className="van-details-img" />
             <div className="van-details-text">
-              <i className={`van-type ${van.type} selected`}>
-                {van.type[0].toUpperCase() + van.type.slice(1)}
+              <i className={`van-type ${currentVan.type} selected`}>
+                {currentVan.type[0].toUpperCase() + currentVan.type.slice(1)}
               </i>
-              <h2>{van.name}</h2>
+              <h2>{currentVan.name}</h2>
               <p className="van-price">
-                <span>${van.price}</span>/day
+                <span>${currentVan.price}</span>/day
               </p>
-              <p className="van-description">{van.description}</p>
+              <p className="van-description">{currentVan.description}</p>
               <button className="link-button">Rent this van</button>
             </div>
           </div>

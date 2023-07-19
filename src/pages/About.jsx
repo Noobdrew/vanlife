@@ -1,9 +1,6 @@
-import { useContext } from "react";
 import { Link } from "react-router-dom";
-import { VanApiContext } from "../App";
+
 export default function About() {
-  const context = useContext(VanApiContext);
-  console.log(context);
   return (
     <div className="about-conteiner">
       <div className="about-img"></div>
