@@ -454,7 +454,6 @@ main.vans-container {
     text-decoration: none;
 }
 
-.van-detail-container .back-button:visited {}
 
 .van-detail-container .back-button span {
     text-decoration: underline;
@@ -688,7 +687,7 @@ main.vans-container {
     border-radius: 10px;
 }
 
-.host-van-details>img {}
+
 
 .host-van-details-text {
     grid-column: 2/3;
