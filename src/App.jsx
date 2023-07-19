@@ -7,6 +7,10 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
+import { createContext, useState, useEffect } from "react";
+import { getVans } from "./api";
+import Layout from "./components/Layout";
+import HostLayout from "./components/HostLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Vans from "./pages/Vans/Vans";
@@ -20,10 +24,7 @@ import HostVanInfo from "./pages/Host/HostVanInfo";
 import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import ErrorPage from "./pages/ErrorPage";
-import Layout from "./components/Layout";
-import HostLayout from "./components/HostLayout";
-import { createContext, useState, useEffect } from "react";
-import { getVans } from "./api";
+import Login from "./pages/Login";
 
 const VanApiContext = createContext(null);
 function App() {
@@ -65,7 +66,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="vans" element={<Vans />} />
             <Route path="vans/:id" element={<VanDetails />} />
-
+            <Route path="login" element={<Login />} />
             <Route path="host" element={<HostLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="income" element={<Income />} />

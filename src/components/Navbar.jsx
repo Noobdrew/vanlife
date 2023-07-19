@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import userIcon from "../assets/user-icon.png";
 
 export default function Navbar() {
   const activeStyle = {
@@ -31,6 +32,12 @@ export default function Navbar() {
         style={({ isActive }) => (isActive ? activeStyle : null)}
       >
         Vans
+      </NavLink>
+      <NavLink
+        to="login"
+        style={({ isActive }) => (isActive ? activeStyle : null)}
+      >
+        <img src={userIcon} className="user-icon" />
       </NavLink>
     </header>
   );
