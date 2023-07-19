@@ -12,13 +12,6 @@ export default function HostVans() {
     setHostVans(vanData.filter((item) => item.hostId == hostId));
   }, []);
 
-  //const [hostVans, setHostVans] = useState([]);
-  // useEffect(() => {
-  //   fetch("/api/host/vans")
-  //     .then((resp) => resp.json())
-  //     .then((data) => setHostVans(data.vans));
-  // }, []);
-
   const hostVanElements = hostVans.map((van) => {
     return (
       <Link
