@@ -1,6 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useSearchParams } from "react-router-dom";
 import VanElement from "../../components/VanElement";
+import { getVans } from "../../api";
+import { VanApiContext } from "../../App";
+
 export default function Vans() {
   const [searchParams, setSearchParams] = useSearchParams();
   const simpleFilter = searchParams.get("t1");
@@ -13,13 +16,27 @@ export default function Vans() {
     { t3: ruggedFilter },
   ];
 
-  const [vanData, setVanData] = useState([]);
+  const { vanData, error } = useContext(VanApiContext);
 
-  useEffect(() => {
-    fetch("/api/vans")
-      .then((reps) => reps.json())
-      .then((data) => setVanData(data.vans));
-  }, []);
+  // const [vanData, setVanData] = useState([]);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(null);
+
+  // useEffect(() => {
+  //   async function loadVans() {
+  //     setLoading(true);
+  //     try {
+  //       const data = await getVans();
+  //       setVanData(data);
+  //     } catch (err) {
+  //       setError(err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+
+  //   loadVans();
+  // }, []);
 
   function filterByConditions(array, conditions) {
     const arr = [];
@@ -66,7 +83,7 @@ export default function Vans() {
       return prevParams;
     });
   }
-
+  if (error) return <h1>There was an error: {error.message}</h1>;
   return (
     <div className="van-page">
       <h1 className="vans-title">Explore our van options</h1>
@@ -108,6 +125,7 @@ export default function Vans() {
           Clear filters
         </NavLink>
       </div>
+
       <main className="vans-container">{VanElements}</main>
     </div>
   );

@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { VanApiContext } from "../App";
+import { useContext } from "react";
 
 export default function Home() {
+  const context = useContext(VanApiContext);
+  console.log(context);
   return (
     <div className="home-container">
       <main className="home-main">
