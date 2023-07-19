@@ -28,7 +28,7 @@ export default function HostVans() {
       </Link>
     );
   });
-
+  if (error) return <h1>There was an error: {error.message}</h1>;
   return (
     <>
       <h1 className="host-van-title">Your listed vans</h1>

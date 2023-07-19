@@ -18,7 +18,7 @@ export default function HostVansDetails() {
     textDecoration: "underline",
     color: "#161616",
   };
-
+  if (error) return <h1>There was an error: {error.message}</h1>;
   if (params.id > vanData.length) return <ErrorPage />;
   if (vanDetail.hostId != hostId)
     return <h1>Van not found in current user's vans!</h1>;
