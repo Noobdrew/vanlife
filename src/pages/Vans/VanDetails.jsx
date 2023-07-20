@@ -11,7 +11,7 @@ export default function VanDetails() {
 
   const currentVanArr = vanData.filter((item) => item.id == params.id);
   const currentVan = currentVanArr[0];
-  console.log(currentVan);
+
   return (
     <div className="van-detail-container">
       {currentVan ? (

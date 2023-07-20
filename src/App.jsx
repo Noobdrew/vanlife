@@ -28,6 +28,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
 
 const VanApiContext = createContext(null);
+const Authorized = createContext(null);
 function App() {
   const [vanData, setVanData] = useState([]);
   const [loading, setLoading] = useState(true);

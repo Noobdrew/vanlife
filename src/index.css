@@ -901,3 +901,7 @@ main.vans-container {
     font-weight: 700;
     line-height: 24px;
 }
+
+.login-error {
+    color: red;
+}
