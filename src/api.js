@@ -1,3 +1,5 @@
+
+
 export async function getVans() {
     const res = await fetch("/api/vans")
     if (!res.ok) {
@@ -8,6 +10,8 @@ export async function getVans() {
         }
     }
     const data = await res.json()
+
+
     return data.vans
 
 }

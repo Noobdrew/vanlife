@@ -62,6 +62,7 @@ export default function Login() {
           Create one now
         </Link>
       </small>
+      <small>login info: email: b@b.com pass: p123</small>
     </div>
   );
 }
