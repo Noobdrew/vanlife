@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../api";
-export default function Login() {
+export default function Login({ currentUser, setCurrentUser }) {
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
@@ -23,6 +23,7 @@ export default function Login() {
       .then((data) => {
         localStorage.setItem("loggedin", true);
         navigate(prevLocation, { replace: true });
+        setCurrentUser(data);
       })
       .catch((err) => setError(err?.message))
       .finally(() => setStatus("idle"));

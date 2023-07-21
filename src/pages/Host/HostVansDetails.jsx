@@ -1,5 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { Outlet, useParams, NavLink, Link } from "react-router-dom";
+import {
+  Outlet,
+  useParams,
+  NavLink,
+  Link,
+  useOutletContext,
+} from "react-router-dom";
 import { VanApiContext } from "../../App";
 import ErrorPage from "../ErrorPage";
 
@@ -8,7 +14,7 @@ export default function HostVansDetails() {
   const hostId = 123;
   const params = useParams();
 
-  const { vanData, error } = useContext(VanApiContext);
+  const { vanData, error, hostData } = useContext(VanApiContext);
 
   const vanDetailArr = vanData.filter((item) => item.id == params.id);
   const vanDetail = vanDetailArr[0];
@@ -66,7 +72,7 @@ export default function HostVansDetails() {
             Photos
           </NavLink>
         </nav>
-        <Outlet context={{ vanDetail }} />
+        <Outlet context={{ vanDetail, hostData }} />
       </div>
     </>
   );

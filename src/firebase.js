@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { Firestore, collection, getDocFromCache, getDocs, getFirestore, addDoc } from 'firebase/firestore'
+import { Firestore, collection, getDocFromCache, getDocs, getFirestore, addDoc, setDoc, doc, updateDoc, deleteField } from 'firebase/firestore'
 
 
 const firebaseConfig = {
@@ -26,20 +26,36 @@ const db = getFirestore()
 
 const colRef = collection(db, 'vans')
 
-getDocs(colRef).then(snapshot => {
-    console.log(snapshot.docs)
-})
 
-async function createNewNote() {
+async function addVans() {
+    getDocs(colRef)
     for (let i = 0; i < vanData.length; i++) {
         const element = vanData[i];
 
-        const newNoteRef = await addDoc(colRef, element)
+        //set vans with their correct id 
+        //and modify them if data is changed
+        const newNoteRef = await setDoc(doc(db, 'vans', element.id), {
+            ...element
+        })
+
+
+
 
     }
 
 }
-createNewNote()
-getDocs(colRef)
 
-console.log(vanData)
+
+//delete specified field
+//remove id property
+async function updateVans() {
+    for (let i = 0; i < vanData.length; i++) {
+        const element = vanData[i];
+        await updateDoc(doc(db, 'vans', element.id), {
+            id: deleteField()
+        })
+    }
+}
+
+//addVans()
+updateVans()

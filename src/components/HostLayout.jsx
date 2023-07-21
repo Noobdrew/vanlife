@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { VanApiContext } from "../App";
 
 export default function HostLayout() {
   const activeStyle = {
@@ -6,6 +8,11 @@ export default function HostLayout() {
     textDecoration: "underline",
     color: "#161616",
   };
+
+  const { vanData, error, currentUser } = useContext(VanApiContext);
+
+  console.log("host layout");
+  console.log(currentUser);
   return (
     <>
       <nav className="host-nav">

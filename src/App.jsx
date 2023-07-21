@@ -28,11 +28,12 @@ import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
 
 const VanApiContext = createContext(null);
-const Authorized = createContext(null);
+
 function App() {
   const [vanData, setVanData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     async function loadVans() {
@@ -59,7 +60,7 @@ function App() {
     );
 
   return (
-    <VanApiContext.Provider value={{ vanData, loading, error }}>
+    <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -68,7 +69,18 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="vans" element={<Vans />} />
             <Route path="vans/:id" element={<VanDetails />} />
-            <Route path="login" element={<Login />} />
+            {/* login sets loged in as local storange/cookies
+                app.jsx fetches hostData after login is true with correct user id
+                */}
+            <Route
+              path="login"
+              element={
+                <Login
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
+              }
+            />
 
             <Route element={<AuthRequired />}>
               <Route path="host" element={<HostLayout />}>

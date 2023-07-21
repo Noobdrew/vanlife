@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 export default function AuthRequired() {
@@ -12,5 +13,6 @@ export default function AuthRequired() {
         replace
       />
     );
+  //send host data to this outliet
   return <Outlet />;
 }

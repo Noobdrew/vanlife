@@ -6,6 +6,8 @@ import { VanApiContext } from "../../App";
 export default function HostVans() {
   //placeholder host id
   const hostId = 123;
+  //this is not good
+  //use fetch host vans on host layout page
   const [hostVans, setHostVans] = useState([]);
   const { vanData, error } = useContext(VanApiContext);
   useEffect(() => {
