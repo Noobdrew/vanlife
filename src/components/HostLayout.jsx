@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { VanApiContext } from "../App";
+import { getHostVans } from "../api";
 
 export default function HostLayout() {
   const activeStyle = {
@@ -9,10 +10,27 @@ export default function HostLayout() {
     color: "#161616",
   };
 
-  const { vanData, error, currentUser } = useContext(VanApiContext);
+  const hostId = "123";
 
-  console.log("host layout");
-  console.log(currentUser);
+  const [hostVansData, setHostVansData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function loadVans() {
+      setLoading(true);
+      try {
+        const data = await getHostVans(hostId);
+        setHostVansData(data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadVans();
+  }, []);
+
   return (
     <>
       <nav className="host-nav">
@@ -43,7 +61,7 @@ export default function HostLayout() {
           Reviews
         </NavLink>
       </nav>
-      <Outlet />
+      <Outlet context={[hostVansData, setHostVansData, error]} />
     </>
   );
 }

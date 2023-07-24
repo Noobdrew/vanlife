@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import HostVanElement from "../../components/HostVanElement";
 import { VanApiContext } from "../../App";
+import { collectionGroup } from "firebase/firestore";
 
 export default function HostVans() {
   //placeholder host id
@@ -9,12 +10,10 @@ export default function HostVans() {
   //this is not good
   //use fetch host vans on host layout page
   const [hostVans, setHostVans] = useState([]);
-  const { vanData, error } = useContext(VanApiContext);
-  useEffect(() => {
-    setHostVans(vanData.filter((item) => item.hostId == hostId));
-  }, []);
 
-  const hostVanElements = hostVans.map((van) => {
+  const [hostVansData, error] = useOutletContext();
+
+  const hostVanElements = hostVansData?.map((van) => {
     return (
       <Link
         key={van.id}
@@ -30,13 +29,13 @@ export default function HostVans() {
       </Link>
     );
   });
-  if (error) return <h1>There was an error: {error.message}</h1>;
+  if (error?.message) return <h1>There was an error: {error.message}</h1>;
   return (
     <>
       <h1 className="host-van-title">Your listed vans</h1>
       <div className="host-van-container">
         {" "}
-        {hostVans.length > 0 ? hostVanElements : <h2>Loading...</h2>}
+        {hostVansData?.length > 0 ? hostVanElements : <h2>Loading...</h2>}
       </div>
     </>
   );

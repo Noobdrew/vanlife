@@ -13,20 +13,18 @@ export default function HostVansDetails() {
   //placeholder host id
   const hostId = 123;
   const params = useParams();
+  const [hostVansData, error] = useOutletContext();
 
-  const { vanData, error, hostData } = useContext(VanApiContext);
-
-  const vanDetailArr = vanData.filter((item) => item.id == params.id);
-  const vanDetail = vanDetailArr[0];
+  const vanDetail = hostVansData?.find((item) => item.id == params.id);
 
   const activeStyle = {
     fontWeight: "bold",
     textDecoration: "underline",
     color: "#161616",
   };
-  if (error) return <h1>There was an error: {error.message}</h1>;
-  if (params.id > vanData.length) return <ErrorPage />;
-  if (vanDetail.hostId != hostId)
+  if (error?.message) return <h1>There was an error: {error.message}</h1>;
+
+  if (vanDetail?.hostId != hostId)
     return <h1>Van not found in current user's vans!</h1>;
 
   return (
@@ -72,7 +70,7 @@ export default function HostVansDetails() {
             Photos
           </NavLink>
         </nav>
-        <Outlet context={{ vanDetail, hostData }} />
+        <Outlet context={vanDetail} />
       </div>
     </>
   );
