@@ -16,7 +16,7 @@ export default function Vans() {
     { t3: ruggedFilter },
   ];
 
-  const { vanData, loading, error } = useContext(VanApiContext);
+  const { vanData, error } = useContext(VanApiContext);
 
   function filterByConditions(array, conditions) {
     const arr = [];

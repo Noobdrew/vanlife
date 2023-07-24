@@ -14,7 +14,7 @@ export default function Navbar() {
       </NavLink>
 
       <NavLink
-        to="host/vans"
+        to="host"
         style={({ isActive }) => (isActive ? activeStyle : null)}
       >
         Host
