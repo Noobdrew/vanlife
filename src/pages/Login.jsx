@@ -1,61 +1,56 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { loginUser } from "../api";
+import { useAuth } from "../components/AuthContext";
+import { auth } from "../api";
+import { signInWithEmailAndPassword } from "firebase/auth";
 export default function Login({ currentUser, setCurrentUser }) {
   const [loginFormData, setLoginFormData] = useState({
     email: "",
     password: "",
   });
-  const [status, setStatus] = useState("idle");
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  const location = useLocation();
-  const message = location?.state?.message;
-  const prevLocation = location?.state?.prevLocation || "/host";
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setError(null);
-    setStatus("submitting");
 
-    loginUser(loginFormData)
-      .then((data) => {
-        localStorage.setItem("loggedin", true);
-        navigate(prevLocation, { replace: true });
-        setCurrentUser(data);
-      })
-      .catch((err) => setError(err?.message))
-      .finally(() => setStatus("idle"));
-  }
+    try {
+      setError("");
+      setLoading(true);
+      await login(email, password);
+    } catch (err) {
+      console.log(err);
+      setError("Failed to log in");
+    }
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setLoginFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setLoading(false);
   }
 
   return (
     <div className="login-container">
-      <h1>{message ? message : "Sign in to your account"}</h1>
+      <h1>Sign in to your account</h1>
       {error && <h3 className="login-error">{error}</h3>}
 
-      <form action="" className="login-form" onSubmit={handleSubmit}>
+      <form action="" className="login-form">
         <input
           name="email"
-          onChange={handleChange}
+          onInput={(e) => setEmail(e.target.value)}
           type="email"
           placeholder="Email adress"
         />
         <input
           name="password"
-          onChange={handleChange}
+          onInput={(e) => setPassword(e.target.value)}
           type="password"
           placeholder="Password"
         />
-        <button disabled={status == "submitting"}>Sign in</button>
+        <button type="button" disabled={loading} onClick={handleSubmit}>
+          Sign in
+        </button>
       </form>
       <small>
         Don't have an account?{" "}
@@ -63,7 +58,7 @@ export default function Login({ currentUser, setCurrentUser }) {
           Create one now
         </Link>
       </small>
-      <small>login info: email: b@b.com pass: p123</small>
+      <small>login info: email: b@b.com pass: 123456</small>
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { collection, getDocs, getFirestore, where, query } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -14,7 +15,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app)
 
 const vansCollectionRef = collection(db, 'vans')
-
+export const auth = getAuth()
 
 export async function getVans() {
     const snapshot = await getDocs(vansCollectionRef)

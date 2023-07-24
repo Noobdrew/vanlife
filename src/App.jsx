@@ -26,6 +26,7 @@ import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
+import { AuthProvider } from "./components/AuthContext";
 
 const VanApiContext = createContext(null);
 
@@ -60,45 +61,47 @@ function App() {
     );
 
   return (
-    <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route path="*" element={<ErrorPage />} />
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="vans" element={<Vans />} />
-            <Route path="vans/:id" element={<VanDetails />} />
-            {/* login sets loged in as local storange/cookies
+    <AuthProvider>
+      <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="*" element={<ErrorPage />} />
+              <Route index element={<Home />} />
+              <Route path="about" element={<About />} />
+              <Route path="vans" element={<Vans />} />
+              <Route path="vans/:id" element={<VanDetails />} />
+              {/* login sets loged in as local storange/cookies
                 app.jsx fetches hostData after login is true with correct user id
                 */}
-            <Route
-              path="login"
-              element={
-                <Login
-                  currentUser={currentUser}
-                  setCurrentUser={setCurrentUser}
-                />
-              }
-            />
+              <Route
+                path="login"
+                element={
+                  <Login
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                  />
+                }
+              />
 
-            <Route element={<AuthRequired />}>
-              <Route path="host" element={<HostLayout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="income" element={<Income />} />
-                <Route path="reviews" element={<Reviews />} />
-                <Route path="vans" element={<HostVans />} />
-                <Route path="vans/:id" element={<HostVansDetails />}>
-                  <Route index element={<HostVanInfo />} />
-                  <Route path="pricing" element={<HostVanPricing />} />
-                  <Route path="photos" element={<HostVanPhotos />} />
+              <Route element={<AuthRequired />}>
+                <Route path="host" element={<HostLayout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="income" element={<Income />} />
+                  <Route path="reviews" element={<Reviews />} />
+                  <Route path="vans" element={<HostVans />} />
+                  <Route path="vans/:id" element={<HostVansDetails />}>
+                    <Route index element={<HostVanInfo />} />
+                    <Route path="pricing" element={<HostVanPricing />} />
+                    <Route path="photos" element={<HostVanPhotos />} />
+                  </Route>
                 </Route>
               </Route>
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </VanApiContext.Provider>
+          </Routes>
+        </BrowserRouter>
+      </VanApiContext.Provider>
+    </AuthProvider>
   );
 }
 

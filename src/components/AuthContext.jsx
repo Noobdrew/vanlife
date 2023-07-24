@@ -36,20 +36,24 @@ export function AuthProvider({ children }) {
     return sendPasswordResetEmail(auth, email);
   }
 
-  function updateEmail(email) {
+  function myUpdateEmail(email) {
     return updateEmail(currentUser, email);
   }
 
-  function updatePassword(password) {
+  function myUpdatePassword(password) {
     return updatePassword(currentUser, password);
   }
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setCurrentUser(user);
-      setLoading(false);
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
     });
-
-    return unsubscribe;
+    setLoading(false);
+    console.log(currentUser);
+    return unsubscribe();
   }, []);
 
   const value = {
@@ -58,8 +62,8 @@ export function AuthProvider({ children }) {
     signup,
     logout,
     resetPassword,
-    updateEmail,
-    updatePassword,
+    myUpdateEmail,
+    myUpdatePassword,
   };
 
   return (
