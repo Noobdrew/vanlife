@@ -1,39 +1,37 @@
-import { useState, useRef } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../components/AuthContext";
+import { useState, useRef, useContext } from "react";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+
 import { auth } from "../api";
 import { signInWithEmailAndPassword } from "firebase/auth";
-export default function Login({ currentUser, setCurrentUser }) {
-  const [loginFormData, setLoginFormData] = useState({
-    email: "",
-    password: "",
-  });
+import { VanApiContext } from "../App";
 
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { currentUser } = useContext(VanApiContext);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setLoading(true);
     try {
-      setError("");
-      setLoading(true);
-      await login(email, password);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (err) {
       console.log(err);
-      setError("Failed to log in");
+      setError(err);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
-
+  console.log(currentUser);
+  if (currentUser) {
+    return <Navigate to="/profile" />;
+  }
   return (
     <div className="login-container">
       <h1>Sign in to your account</h1>
-      {error && <h3 className="login-error">{error}</h3>}
+      {error && <h3 className="login-error">{error.message}</h3>}
 
       <form action="" className="login-form">
         <input

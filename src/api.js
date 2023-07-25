@@ -12,9 +12,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app)
+export const db = getFirestore()
 
-const vansCollectionRef = collection(db, 'vans')
+export const vansCollectionRef = collection(db, 'vans')
 export const auth = getAuth()
 
 export async function getVans() {

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { VanApiContext } from "../App";
 
 export default function AuthRequired() {
-  const isLoggedIn = localStorage.getItem("loggedin");
+  const { currentUser } = useContext(VanApiContext);
+
   const { pathname } = useLocation();
 
-  if (!isLoggedIn)
+  if (!currentUser)
     return (
       <Navigate
         to="/login"

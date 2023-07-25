@@ -1,5 +1,4 @@
 import "./App.css";
-import "./server";
 import {
   BrowserRouter,
   Route,
@@ -8,7 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
-import { getVans } from "./api";
+import { auth, db, getVans } from "./api";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
 import AuthRequired from "./components/AuthRequired";
@@ -26,7 +25,10 @@ import HostVanPricing from "./pages/Host/HostVanPricing";
 import HostVanPhotos from "./pages/Host/HostVanPhotos";
 import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
-import { AuthProvider } from "./components/AuthContext";
+import { onAuthStateChanged } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
+import CreateAccount from "./pages/CreateAccount";
+import UserProfile from "./pages/UserProfile/UserProfile";
 
 const VanApiContext = createContext(null);
 
@@ -35,6 +37,18 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [userData, setUserData] = useState(null);
+  console.log(currentUser);
+  async function getUser(uid) {
+    const docRef = doc(db, "users", uid);
+
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      return snapshot.data();
+    } else {
+      await setDoc(docRef, {});
+    }
+  }
 
   useEffect(() => {
     async function loadVans() {
@@ -49,7 +63,20 @@ function App() {
       }
     }
 
+    const listen = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        setCurrentUser(user);
+        const data = await getUser(user?.uid);
+        setUserData(data);
+      } else {
+        setCurrentUser(null);
+      }
+    });
+
     loadVans();
+    return () => {
+      listen();
+    };
   }, []);
 
   if (loading)
@@ -61,47 +88,40 @@ function App() {
     );
 
   return (
-    <AuthProvider>
-      <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="*" element={<ErrorPage />} />
-              <Route index element={<Home />} />
-              <Route path="about" element={<About />} />
-              <Route path="vans" element={<Vans />} />
-              <Route path="vans/:id" element={<VanDetails />} />
-              {/* login sets loged in as local storange/cookies
+    <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="*" element={<ErrorPage />} />
+            <Route index element={<Home />} />
+            <Route path="about" element={<About />} />
+            <Route path="vans" element={<Vans />} />
+            <Route path="vans/:id" element={<VanDetails />} />
+            {/* login sets loged in as local storange/cookies
                 app.jsx fetches hostData after login is true with correct user id
                 */}
-              <Route
-                path="login"
-                element={
-                  <Login
-                    currentUser={currentUser}
-                    setCurrentUser={setCurrentUser}
-                  />
-                }
-              />
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<CreateAccount />} />
 
-              <Route element={<AuthRequired />}>
-                <Route path="host" element={<HostLayout />}>
-                  <Route index element={<Dashboard />} />
-                  <Route path="income" element={<Income />} />
-                  <Route path="reviews" element={<Reviews />} />
-                  <Route path="vans" element={<HostVans />} />
-                  <Route path="vans/:id" element={<HostVansDetails />}>
-                    <Route index element={<HostVanInfo />} />
-                    <Route path="pricing" element={<HostVanPricing />} />
-                    <Route path="photos" element={<HostVanPhotos />} />
-                  </Route>
+            <Route element={<AuthRequired />}>
+              <Route path="/profile" element={<UserProfile />} />
+
+              <Route path="/host" element={<HostLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="income" element={<Income />} />
+                <Route path="reviews" element={<Reviews />} />
+                <Route path="vans" element={<HostVans />} />
+                <Route path="vans/:id" element={<HostVansDetails />}>
+                  <Route index element={<HostVanInfo />} />
+                  <Route path="pricing" element={<HostVanPricing />} />
+                  <Route path="photos" element={<HostVanPhotos />} />
                 </Route>
               </Route>
             </Route>
-          </Routes>
-        </BrowserRouter>
-      </VanApiContext.Provider>
-    </AuthProvider>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </VanApiContext.Provider>
   );
 }
 
