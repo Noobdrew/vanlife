@@ -18,7 +18,7 @@ export default function UserProfile() {
   const [confirmEmail, setConfirmEmail] = useState();
   const [changeEmailPassword, setChangeEmailPassowrd] = useState();
   const [error, setError] = useState(null);
-  console.log(currentUser);
+
   async function signout() {
     try {
       await signOut(auth);
