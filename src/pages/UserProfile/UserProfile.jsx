@@ -9,6 +9,8 @@ import { auth } from "../../api";
 import userIcon from "../../assets/user-circle.svg";
 import { useContext, useState } from "react";
 import { VanApiContext } from "../../App";
+import ChangeEmail from "./ChangeEmail";
+import ChangePassword from "./ChangePassword";
 
 export default function UserProfile() {
   const { currentUser } = useContext(VanApiContext);
@@ -31,73 +33,23 @@ export default function UserProfile() {
     setEmailOpen(true);
     setError(null);
   }
-  function cancelChangeEmail() {
-    setEmailOpen(false);
-  }
-  async function confirmCangeEmail(e) {
-    e.preventDefault();
 
-    if (newEmail !== confirmEmail) {
-      return;
-    }
-    try {
-      const credential = EmailAuthProvider.credential(
-        auth.currentUser.email,
-        changeEmailPassword
-      );
-      const result = await reauthenticateWithCredential(
-        auth.currentUser,
-        credential
-      );
-      await updateEmail(auth.currentUser, newEmail);
-      setEmailOpen(false);
-    } catch (err) {
-      console.log(err);
-      setError(err);
-    }
+  function changePassword() {
+    setPasswordOpen(true);
+    setError(null);
   }
   return (
     <>
       {emailOpen ? (
-        <div className="email-popup">
-          <form action="">
-            <h2>Change Email</h2>
-            <p>{error ? error.message : ""}</p>
-            <input
-              type="email"
-              placeholder="New Email"
-              onChange={(e) => setNewEmail(e.target.value)}
-            />
-            <input
-              type="email"
-              placeholder="Confirm Email"
-              onChange={(e) => setConfirmEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setChangeEmailPassowrd(e.target.value)}
-            />
-            <button onClick={confirmCangeEmail}>Submit</button>
-            <button onClick={cancelChangeEmail} className="popup-cancel">
-              Cancel
-            </button>
-          </form>
-        </div>
+        <ChangeEmail emailOpen={emailOpen} setEmailOpen={setEmailOpen} />
       ) : (
         ""
       )}
       {passwordOpen ? (
-        <div className="password-popup">
-          <form action="">
-            <h2>Change Password</h2>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <input type="password" placeholder="Confirm Password" />
-            <button>Submit</button>
-            <button className="popup-cancel">Cancel</button>
-          </form>
-        </div>
+        <ChangePassword
+          passwordOpen={passwordOpen}
+          setPasswordOpen={setPasswordOpen}
+        />
       ) : (
         ""
       )}
@@ -123,7 +75,10 @@ export default function UserProfile() {
           Change Email
         </button>
 
-        <button className="user-change-password user-profile-button">
+        <button
+          className="user-change-password user-profile-button"
+          onClick={changePassword}
+        >
           Change Password
         </button>
 

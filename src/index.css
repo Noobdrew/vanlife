@@ -9,6 +9,77 @@ body {
     background: #FFF7ED;
 }
 
+.danger {
+    color: #FF3D00;
+}
+
+.popup-outer {
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: -100px;
+    left: 0;
+    right: 0;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.popup-inner {
+    text-align: center;
+    padding: 10px 40px;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    max-width: 300px;
+    box-shadow: 2px 2px 3px rgba(77, 77, 77, 0.486);
+}
+
+.slide-bottom {
+    visibility: visible;
+    -webkit-animation: slide-bottom 1.5s ease-in-out 2 alternate both;
+    animation: slide-bottom 1.5s ease-in-out 2 alternate both;
+}
+
+@-webkit-keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    40% {
+        -webkit-transform: translateY(150px);
+        transform: translateY(150px);
+    }
+
+    100% {
+        -webkit-transform: translateY(150px);
+        transform: translateY(150px);
+    }
+}
+
+@keyframes slide-bottom {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    40% {
+        -webkit-transform: translateY(150px);
+        transform: translateY(150px);
+    }
+
+    100% {
+        -webkit-transform: translateY(150px);
+        transform: translateY(150px);
+    }
+}
+
 .loader-conteiner {
     margin-top: 250px;
     display: flex;

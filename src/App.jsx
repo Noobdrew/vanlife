@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   BrowserRouter,
   Route,
@@ -29,16 +28,20 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import CreateAccount from "./pages/CreateAccount";
 import UserProfile from "./pages/UserProfile/UserProfile";
+import Popup from "./components/Popup";
 
 const VanApiContext = createContext(null);
 
 function App() {
+  //global states
   const [vanData, setVanData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [userData, setUserData] = useState(null);
-  console.log(currentUser);
+  const [popupOpen, setPopupOpen] = useState(false);
+  const [popupText, setPopupText] = useState("Unknow error");
+
   async function getUser(uid) {
     const docRef = doc(db, "users", uid);
 
@@ -78,6 +81,7 @@ function App() {
       listen();
     };
   }, []);
+  console.log(popupOpen);
 
   if (loading)
     return (
@@ -88,7 +92,19 @@ function App() {
     );
 
   return (
-    <VanApiContext.Provider value={{ vanData, loading, error, currentUser }}>
+    <VanApiContext.Provider
+      value={{
+        vanData,
+        loading,
+        error,
+        currentUser,
+        popupOpen,
+        setPopupOpen,
+        setPopupText,
+        popupText,
+      }}
+    >
+      <Popup>{popupText}</Popup>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
