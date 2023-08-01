@@ -29,6 +29,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import CreateAccount from "./pages/CreateAccount";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Popup from "./components/Popup";
+import Signup from "./pages/Signup";
 
 const VanApiContext = createContext(null);
 
@@ -49,7 +50,10 @@ function App() {
     if (snapshot.exists()) {
       return snapshot.data();
     } else {
-      await setDoc(docRef, {});
+      //user db data goes here
+      await setDoc(docRef, {
+        testData: "put user data here",
+      });
     }
   }
 
@@ -75,13 +79,12 @@ function App() {
         setCurrentUser(null);
       }
     });
-
+    console.log(userData);
     loadVans();
     return () => {
       listen();
     };
   }, []);
-  console.log(popupOpen);
 
   if (loading)
     return (
@@ -117,6 +120,7 @@ function App() {
                 app.jsx fetches hostData after login is true with correct user id
                 */}
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="signup" element={<CreateAccount />} />
 
             <Route element={<AuthRequired />}>

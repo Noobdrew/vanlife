@@ -8,7 +8,7 @@ import { VanApiContext } from "../App";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { currentUser } = useContext(VanApiContext);
+  const { currentUser, setPopupOpen, setPopupText } = useContext(VanApiContext);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -17,6 +17,8 @@ export default function Login() {
     setLoading(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      setPopupText(`Welcome back ${auth.currentUser.displayName}`);
+      setPopupOpen(true);
     } catch (err) {
       console.log(err);
       setError(err);
@@ -33,7 +35,7 @@ export default function Login() {
       <h1>Sign in to your account</h1>
       {error && <h3 className="login-error">{error.message}</h3>}
 
-      <form action="" className="login-form">
+      <form action="" className="login-form" onSubmit={handleSubmit}>
         <input
           name="email"
           onInput={(e) => setEmail(e.target.value)}
@@ -46,13 +48,13 @@ export default function Login() {
           type="password"
           placeholder="Password"
         />
-        <button type="button" disabled={loading} onClick={handleSubmit}>
+        <button type="submit" disabled={loading}>
           Sign in
         </button>
       </form>
       <small>
         Don't have an account?{" "}
-        <Link className="create-account-link" to=".">
+        <Link className="create-account-link" to="/signup">
           Create one now
         </Link>
       </small>

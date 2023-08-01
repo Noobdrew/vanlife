@@ -4,21 +4,23 @@ import {
   reauthenticateWithCredential,
   signOut,
   updateEmail,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../../api";
 import userIcon from "../../assets/user-circle.svg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { VanApiContext } from "../../App";
 import ChangeEmail from "./ChangeEmail";
 import ChangePassword from "./ChangePassword";
 
 export default function UserProfile() {
-  const { currentUser } = useContext(VanApiContext);
+  const { currentUser, setPopupOpen, setPopupText } = useContext(VanApiContext);
   const [emailOpen, setEmailOpen] = useState(false);
   const [passwordOpen, setPasswordOpen] = useState(false);
-  const [newEmail, setNewEmail] = useState();
-  const [confirmEmail, setConfirmEmail] = useState();
-  const [changeEmailPassword, setChangeEmailPassowrd] = useState();
+  const [userName, setUserName] = useState();
+  const [tempUserName, setTempUserName] = useState(
+    auth.currentUser.displayName
+  );
   const [error, setError] = useState(null);
 
   async function signout() {
@@ -38,6 +40,22 @@ export default function UserProfile() {
     setPasswordOpen(true);
     setError(null);
   }
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (tempUserName !== auth.currentUser.displayName) {
+        updateProfile(auth.currentUser, {
+          displayName: tempUserName,
+        });
+        console.log(tempUserName);
+        console.log("name changed");
+        setPopupText(`Name changed to ${tempUserName}`);
+        setPopupOpen(true);
+      }
+    }, 1000);
+    return () => clearTimeout(timeoutId);
+  }, [tempUserName]);
+  console.log(auth.currentUser);
   return (
     <>
       {emailOpen ? (
@@ -64,8 +82,11 @@ export default function UserProfile() {
         <input
           type="text"
           className="user-profile-name"
-          placeholder={"name"}
+          placeholder={currentUser.displayName || "3-11 Characters"}
+          value={tempUserName}
+          minLength={3}
           maxLength={11}
+          onChange={(e) => setTempUserName(e.target.value)}
         />
 
         <button

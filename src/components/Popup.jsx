@@ -7,7 +7,7 @@ export default function Popup({ children }) {
   useEffect(() => {
     if (popupOpen) {
       setTimeout(() => {
-        console.log("timeout");
+        console.log("popup hidden");
         setPopupOpen(false);
       }, 3000);
     }
