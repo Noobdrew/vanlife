@@ -26,6 +26,8 @@ export default function UserProfile() {
   async function signout() {
     try {
       await signOut(auth);
+      setPopupText("See you next time!");
+      setPopupOpen(true);
     } catch (err) {
       console.log(err);
     }
