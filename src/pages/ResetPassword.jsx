@@ -1,24 +1,32 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 import { auth } from "../api";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  sendPasswordResetEmail,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { VanApiContext } from "../App";
 
-export default function Login() {
+export default function ResetPassword() {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
   const { currentUser, setPopupOpen, setPopupText } = useContext(VanApiContext);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [passReset, setPassReset] = useState(false);
+  useEffect(() => {
+    setPassReset(false);
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setPopupText(`Welcome back ${auth.currentUser.displayName}`);
+      await sendPasswordResetEmail(auth, email);
+      setPopupText(`Password reset email sent!`);
       setPopupOpen(true);
+      setPassReset(true);
     } catch (err) {
       console.log(err);
       setError(err);
@@ -26,14 +34,13 @@ export default function Login() {
       setLoading(false);
     }
   }
-  console.log(currentUser);
-  if (currentUser) {
-    return <Navigate to="/profile" />;
+  if (passReset) {
+    return <Navigate to="/login" />;
   }
 
   return (
     <div className="login-container">
-      <h1>Sign in to your account</h1>
+      <h1>Password reset</h1>
       {error && <h3 className="login-error">{error.message}</h3>}
 
       <form action="" className="login-form" onSubmit={handleSubmit}>
@@ -43,21 +50,14 @@ export default function Login() {
           type="email"
           placeholder="Email adress"
         />
-        <input
-          name="password"
-          onInput={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-        />
-
         <button type="submit" disabled={loading}>
-          Sign in
+          Reset Password
         </button>
       </form>
       <small>
-        Forgotten your password?{" "}
-        <Link className="create-account-link" to="/resetpass">
-          Reset Password
+        Already have an accound?{" "}
+        <Link className="create-account-link" to="/login">
+          Log in
         </Link>
       </small>
 

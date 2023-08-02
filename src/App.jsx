@@ -30,6 +30,7 @@ import CreateAccount from "./pages/CreateAccount";
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Popup from "./components/Popup";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
 
 const VanApiContext = createContext(null);
 
@@ -122,6 +123,7 @@ function App() {
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
             <Route path="signup" element={<CreateAccount />} />
+            <Route path="resetpass" element={<ResetPassword />} />
 
             <Route element={<AuthRequired />}>
               <Route path="/profile" element={<UserProfile />} />
