@@ -32,7 +32,7 @@ export default function HostVans() {
   if (error?.message) return <h1>There was an error: {error.message}</h1>;
   return (
     <>
-      <h1 className="host-van-title">Your listed vans</h1>
+      <h1 className="host-van-title host-title">Your listed vans</h1>
       <div className="host-van-container">
         {" "}
         {hostVansData?.length > 0 ? hostVanElements : <h2>Loading...</h2>}

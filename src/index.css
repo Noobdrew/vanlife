@@ -670,9 +670,8 @@ main.vans-container {
     width: 300px;
 }
 
-.host-van-title {
+.host-title {
     margin-left: 20px;
-
     color: #161616;
     font-size: 32px;
     font-weight: 700;
@@ -727,6 +726,68 @@ main.vans-container {
 
     .host-van-element img {
         width: 200px;
+    }
+}
+
+/*     Host income      */
+.income-inner {
+    margin-bottom: 100px;
+}
+
+.chart-container {
+    display: flex;
+    align-items: center;
+    padding: 30px;
+    position: relative;
+    max-width: 600px;
+    height: 500px;
+}
+
+.transaction-outer {
+    margin: 0 30px;
+
+}
+
+.transaction-outer>h2 {
+    margin-bottom: 15px;
+}
+
+.transaction-container {
+    font-family: 'inter';
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+    margin-bottom: 15px;
+    display: flex;
+    background-color: white;
+    min-width: 300px;
+    max-width: 900px;
+
+}
+
+@media (min-width:975px) {
+    .income-inner {
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 5vw;
+    }
+
+    .transaction-outer {
+        width: 50vw;
+    }
+
+    .transaction-outer>h2 {
+        margin-bottom: 20px;
+    }
+
+    .transaction-container {
+        height: 50px;
+        margin-bottom: 25px;
+
     }
 }
 

@@ -57,7 +57,7 @@ export default function UserProfile() {
     }, 1000);
     return () => clearTimeout(timeoutId);
   }, [tempUserName]);
-  console.log(auth.currentUser);
+
   return (
     <>
       {emailOpen ? (

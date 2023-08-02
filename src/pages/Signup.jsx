@@ -33,6 +33,7 @@ export default function Signup() {
       await updateProfile(auth.currentUser, {
         displayName: userName,
       });
+
       setPopupText(`Account created, welcome ${userName}`);
       setPopupOpen(true);
     } catch (err) {
@@ -42,7 +43,7 @@ export default function Signup() {
       setLoading(false);
     }
   }
-  console.log(currentUser);
+
   if (currentUser && !loading) {
     return <Navigate to="/profile" />;
   }

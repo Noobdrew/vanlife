@@ -26,7 +26,7 @@ export default function Login() {
       setLoading(false);
     }
   }
-  console.log(currentUser);
+
   if (currentUser) {
     return <Navigate to="/profile" />;
   }

@@ -45,6 +45,73 @@ function App() {
   const [popupText, setPopupText] = useState("Unknow error");
 
   async function getUser(uid) {
+    let data = {
+      income: [
+        {
+          id: 1,
+          year: 2023,
+          month: "January",
+          income: 0,
+        },
+        {
+          id: 2,
+          year: 2023,
+          month: "February",
+          income: 0,
+        },
+        {
+          id: 3,
+          year: 2023,
+          month: "March",
+          income: 1540,
+        },
+        {
+          id: 4,
+          year: 2023,
+          month: "April",
+          income: 720,
+        },
+        {
+          id: 5,
+          year: 2023,
+          month: "May",
+          income: 0,
+        },
+        {
+          id: 6,
+          year: 2023,
+          month: "June",
+          income: 0,
+        },
+        {
+          id: 7,
+          year: 2023,
+          month: "July",
+          income: 0,
+        },
+        {
+          id: 8,
+          year: 2023,
+          month: "August",
+          income: 500,
+        },
+      ],
+      transactions: [
+        {
+          price: 560,
+          date: "10/3/23",
+        },
+        {
+          price: 980,
+          date: "23/3/23",
+        },
+        {
+          price: 720,
+          date: "1/4/23",
+        },
+        { price: 500, date: "1/08/23" },
+      ],
+    };
     const docRef = doc(db, "users", uid);
 
     const snapshot = await getDoc(docRef);
@@ -52,13 +119,12 @@ function App() {
       return snapshot.data();
     } else {
       //user db data goes here
-      await setDoc(docRef, {
-        testData: "put user data here",
-      });
+      await setDoc(docRef, data);
     }
   }
 
   useEffect(() => {
+    console.log("load vans");
     async function loadVans() {
       setLoading(true);
       try {
@@ -78,15 +144,16 @@ function App() {
         setUserData(data);
       } else {
         setCurrentUser(null);
+        setUserData(null);
       }
     });
-    console.log(userData);
+
     loadVans();
     return () => {
       listen();
     };
   }, []);
-
+  console.log(userData);
   if (loading)
     return (
       <div className="loader-conteiner">
@@ -106,6 +173,7 @@ function App() {
         setPopupOpen,
         setPopupText,
         popupText,
+        userData,
       }}
     >
       <Popup>{popupText}</Popup>
