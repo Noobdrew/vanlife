@@ -955,7 +955,7 @@ main.vans-container {
 /*   Login page    */
 
 .login-container {
-    margin-top: 50px;
+    margin: 50px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
