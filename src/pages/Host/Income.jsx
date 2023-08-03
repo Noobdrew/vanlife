@@ -33,7 +33,7 @@ export default function Income() {
 
         <div className="transaction-outer">
           {" "}
-          <h2>Your transaction</h2> {transElements}
+          <h2>Your transactions</h2> {transElements}
         </div>
       </div>
     </div>

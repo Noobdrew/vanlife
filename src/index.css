@@ -769,6 +769,10 @@ main.vans-container {
 }
 
 @media (min-width:975px) {
+    .chart-container {
+        width: 600px;
+    }
+
     .income-inner {
         margin-left: 20px;
         display: flex;
