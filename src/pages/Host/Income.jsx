@@ -1,22 +1,35 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { VanApiContext } from "../../App";
 import BarChart from "../../components/BarChart";
 import RecentTransactions from "../../components/RecentTransactions";
 
 export default function Income() {
-  const { userData } = useContext(VanApiContext);
+  const { userData, currentUser } = useContext(VanApiContext);
   const [chartData, setChartData] = useState({
-    labels: userData.income.map((data) => data.month),
+    labels: userData?.income?.map((data) => data.month),
     datasets: [
       {
         label: "Income this year",
-        data: userData.income.map((data) => data.income),
+        data: userData?.income?.map((data) => data.income),
         backgroundColor: ["#FF8C38"],
       },
     ],
   });
 
-  const transElements = userData.transactions.map((item) => {
+  useEffect(() => {
+    setChartData({
+      labels: userData.income.map((data) => data.month),
+      datasets: [
+        {
+          label: "Income this year",
+          data: userData.income.map((data) => data.income),
+          backgroundColor: ["#FF8C38"],
+        },
+      ],
+    });
+  }, [currentUser]);
+
+  const transElements = userData?.transactions.map((item) => {
     return (
       <RecentTransactions key={item.date} price={item.price} date={item.date} />
     );

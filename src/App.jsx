@@ -63,13 +63,13 @@ function App() {
           id: 3,
           year: 2023,
           month: "March",
-          income: 1540,
+          income: 0,
         },
         {
           id: 4,
           year: 2023,
           month: "April",
-          income: 720,
+          income: 0,
         },
         {
           id: 5,
@@ -93,24 +93,10 @@ function App() {
           id: 8,
           year: 2023,
           month: "August",
-          income: 500,
+          income: 0,
         },
       ],
-      transactions: [
-        {
-          price: 560,
-          date: "10/3/23",
-        },
-        {
-          price: 980,
-          date: "23/3/23",
-        },
-        {
-          price: 720,
-          date: "1/4/23",
-        },
-        { price: 500, date: "1/08/23" },
-      ],
+      transactions: [],
     };
     const docRef = doc(db, "users", uid);
 

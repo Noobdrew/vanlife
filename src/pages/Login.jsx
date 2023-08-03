@@ -67,6 +67,7 @@ export default function Login() {
           Create one now
         </Link>
       </small>
+      <small>Sample user with data b@b.com pass: 123456</small>
     </div>
   );
 }
