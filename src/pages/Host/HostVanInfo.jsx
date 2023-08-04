@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, useOutletContext } from "react-router-dom";
 import { storeVanData } from "../../api";
+import { VanApiContext } from "../../App";
 
 export default function HostVanInfo() {
+  const { setPopupOpen, setPopupText } = useContext(VanApiContext);
   const { vanDetail, newVanData, setNewVanData } = useOutletContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -19,6 +21,8 @@ export default function HostVanInfo() {
       setLoading(true);
       console.log(vanData);
       try {
+        setPopupOpen(true);
+        setPopupText("Van data updated!");
         storeVanData(vanDetail.id, vanData);
       } catch (err) {
         console.log(err);
