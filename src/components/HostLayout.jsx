@@ -4,32 +4,30 @@ import { VanApiContext } from "../App";
 import { getHostVans } from "../api";
 
 export default function HostLayout() {
+  const { currentUser } = useContext(VanApiContext);
   const activeStyle = {
     fontWeight: "bold",
     textDecoration: "underline",
     color: "#161616",
   };
 
-  const hostId = "123";
+  const hostId = currentUser.uid;
 
   const [hostVansData, setHostVansData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function loadVans() {
-      setLoading(true);
-      try {
-        const data = await getHostVans(hostId);
-        setHostVansData(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadVans();
-  }, []);
+    const unsubscribe = getHostVans(hostId, (vans) => {
+      setHostVansData(vans);
+      setLoading(false);
+    });
+
+    return () => {
+      console.log("host vans unsub");
+      unsubscribe();
+    };
+  }, [hostId]);
 
   return (
     <>

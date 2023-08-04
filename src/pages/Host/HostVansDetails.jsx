@@ -10,11 +10,11 @@ import { VanApiContext } from "../../App";
 import ErrorPage from "../ErrorPage";
 
 export default function HostVansDetails() {
+  const { currentUser } = useContext(VanApiContext);
   //placeholder host id
-  const hostId = 123;
+  const hostId = currentUser.uid;
   const params = useParams();
   const [hostVansData, error] = useOutletContext();
-
   const vanDetail = hostVansData?.find((item) => item.id == params.id);
 
   const activeStyle = {
@@ -50,7 +50,7 @@ export default function HostVansDetails() {
         </div>
 
         <nav className="host-van-details-nav">
-          <NavLink
+          {/* <NavLink
             end
             to={"."}
             style={({ isActive }) => (isActive ? activeStyle : null)}
@@ -68,9 +68,9 @@ export default function HostVansDetails() {
             style={({ isActive }) => (isActive ? activeStyle : null)}
           >
             Photos
-          </NavLink>
+          </NavLink> */}
         </nav>
-        <Outlet context={vanDetail} />
+        <Outlet context={{ vanDetail }} />
       </div>
     </>
   );

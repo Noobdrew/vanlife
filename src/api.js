@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { collection, getDocs, getFirestore, where, query } from "firebase/firestore";
+import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCrE7nNQpM7y16fUGN4TSljIn4b8eYak6s",
@@ -26,17 +26,20 @@ export async function getVans() {
     return vans
 }
 
+export async function storeVanData(vanId, data) {
+    await setDoc(doc(db, 'vans', vanId), data)
+}
 
+export function getHostVans(hostId, onUpdate) {
+    const q = query(vansCollectionRef, where("hostId", "==", hostId));
 
-export async function getHostVans(hostId) {
-    const q = query(vansCollectionRef, where("hostId", "==", hostId))
-    const snapshot = await getDocs(q)
-    const vans = snapshot.docs.map(doc => ({
-        ...doc.data(),
-        id: doc.id
-    }))
-
-    return vans
+    return onSnapshot(q, (snapshot) => {
+        const vans = snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+        }));
+        onUpdate(vans);
+    });
 }
 
 

@@ -35,7 +35,7 @@ export default function VanDetails() {
                 <span>${currentVan.price}</span>/day
               </p>
               <p className="van-description">{currentVan.description}</p>
-              <button className="link-button">Rent this van</button>
+              <button className="confirm-button big">Rent this van</button>
             </div>
           </div>
         </>
