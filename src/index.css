@@ -41,7 +41,7 @@ body {
 
 .big {
     max-width: unset;
-    margin-top: 20px;
+    margin-top: 10px;
     border: none;
     padding: 15px 5px;
     border-radius: 4px;
@@ -847,7 +847,7 @@ main.vans-container {
     column-gap: 15px;
     margin: 20px 30px;
     border-radius: 10px;
-    padding: 20px;
+    padding: 20px 20px 50px 20px;
 }
 
 .host-van-details-img {
@@ -915,6 +915,7 @@ main.vans-container {
     display: flex;
     flex-direction: column;
     align-items: start;
+
     gap: 2px;
 }
 
@@ -928,6 +929,10 @@ main.vans-container {
     font-family: 'inter', sans-serif;
     border: none;
 
+}
+
+.host-van-details-form>input {
+    width: 100%;
 }
 
 textarea {
@@ -960,7 +965,7 @@ textarea {
 
     .host-van-details-content {
         align-self: flex-start;
-        grid-row: 3/9;
+        grid-row: 2/9;
         grid-column: 2/3;
     }
 

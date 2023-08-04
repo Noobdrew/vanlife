@@ -7,6 +7,7 @@ export default function HostVanInfo() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [name, setName] = useState(vanDetail.name);
+  const [img, setImg] = useState(vanDetail.imageUrl);
   const [price, setPrice] = useState(vanDetail.price);
   const [description, setDescription] = useState(vanDetail.description);
   const [type, setType] = useState(vanDetail.type);
@@ -39,6 +40,7 @@ export default function HostVanInfo() {
         type: type,
         visibility: visibility,
         price: price,
+        imageUrl: img,
       };
     });
   }
@@ -79,7 +81,13 @@ export default function HostVanInfo() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
-
+        <label htmlFor="van-img">Van Image: </label>
+        <input
+          type="text"
+          id="van-img"
+          value={img}
+          onChange={(e) => setImg(e.target.value)}
+        />
         <label htmlFor="visibility">Visibility: </label>
         <select
           name="visibility"

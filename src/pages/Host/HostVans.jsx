@@ -35,7 +35,14 @@ export default function HostVans() {
       <h1 className="host-van-title host-title">Your listed vans</h1>
       <div className="host-van-container">
         {" "}
-        {hostVansData?.length > 0 ? hostVanElements : <h2>Loading...</h2>}
+        {hostVansData?.length > 0 ? (
+          hostVanElements
+        ) : (
+          <div>
+            <h2>You have no vans!</h2>
+            <button className="confirm-button">Add one +</button>
+          </div>
+        )}
       </div>
     </>
   );
