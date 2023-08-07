@@ -18,6 +18,11 @@ export default function Ratings({ ratingAvg, ratingsObj, currentVan }) {
   };
 
   function submitRating() {
+    if (!currentUser?.uid) {
+      setPopupOpen(true);
+      setPopupText("You must login to post a rating!");
+      return;
+    }
     let ratingsData = {
       ...ratingsObj,
       [currentUser.uid]: rating,
