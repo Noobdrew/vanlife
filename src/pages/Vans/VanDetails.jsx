@@ -41,12 +41,7 @@ export default function VanDetails() {
                   {currentVan.type[0].toUpperCase() + currentVan.type.slice(1)}
                 </div>
                 <div className="van-details-rating">
-                  <Ratings
-                    ratingAvg={ratingAvg}
-                    ratingsObj={ratingsObj}
-                    currentVan={currentVan}
-                  />{" "}
-                  {ratingAvg.toFixed(1)}
+                  <Ratings ratingsObj={ratingsObj} currentVan={currentVan} />{" "}
                 </div>
               </div>
 

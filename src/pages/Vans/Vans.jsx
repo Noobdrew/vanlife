@@ -44,10 +44,12 @@ export default function Vans() {
         key={van.id}
       >
         <VanElement
+          currentVan={van}
           img={van.imageUrl}
           name={van.name}
           price={van.price}
           type={van.type}
+          ratings={van.ratings}
         />
       </Link>
     );

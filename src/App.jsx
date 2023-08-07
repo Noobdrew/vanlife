@@ -128,7 +128,6 @@ function App() {
     console.log("new user");
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        console.log(user.displayName);
         setCurrentUser(user);
         const data = await getUser(user?.uid);
         setUserData(data);

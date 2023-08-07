@@ -5,11 +5,18 @@ import { VanApiContext } from "../App";
 import { db, postRating } from "../api";
 import { doc, onSnapshot } from "firebase/firestore";
 
-export default function Ratings({ ratingAvg, ratingsObj, currentVan }) {
+export default function Ratings({ ratingsObj, currentVan, disabled }) {
   const { currentUser, setPopupOpen, setPopupText } = useContext(VanApiContext);
+  const sumOfRatings = Object.values(ratingsObj).reduce(
+    (acc, value) => acc + value,
+    0
+  );
+  const ratingAvg = sumOfRatings / Object.keys(ratingsObj).length;
+
   const [rating, setRating] = useState(ratingAvg);
-  useState;
+
   const handleMouseOver = (starCount) => {
+    if (disabled) return;
     setRating(starCount);
   };
 
@@ -18,6 +25,7 @@ export default function Ratings({ ratingAvg, ratingsObj, currentVan }) {
   };
 
   function submitRating() {
+    if (disabled) return;
     if (!currentUser?.uid) {
       setPopupOpen(true);
       setPopupText("You must login to post a rating!");
@@ -41,24 +49,27 @@ export default function Ratings({ ratingAvg, ratingsObj, currentVan }) {
   }
 
   return (
-    <div>
-      {[1, 2, 3, 4, 5].map((starCount) => (
-        <svg
-          key={starCount}
-          width="24px"
-          height="24px"
-          viewBox="0 0 24 24"
-          fill={starCount <= rating ? "gold" : "gray"}
-          onMouseOver={() => handleMouseOver(starCount)}
-          onClick={submitRating}
-          onMouseLeave={handleMouseLeave}
-        >
-          <path
-            fillRule="evenodd"
-            d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"
-          />
-        </svg>
-      ))}
+    <div className="ratings-outer">
+      <div>
+        {[1, 2, 3, 4, 5].map((starCount) => (
+          <svg
+            key={starCount}
+            width="24px"
+            height="24px"
+            viewBox="0 0 24 24"
+            fill={starCount <= rating ? "gold" : "gray"}
+            onMouseOver={() => handleMouseOver(starCount)}
+            onClick={submitRating}
+            onMouseLeave={handleMouseLeave}
+          >
+            <path
+              fillRule="evenodd"
+              d="M12 2l2.4 7.2h7.6l-6 4.8 2.4 7.2-6-4.8-6 4.8 2.4-7.2-6-4.8h7.6z"
+            />
+          </svg>
+        ))}
+      </div>
+      <p>{ratingAvg.toFixed(1)}</p>
     </div>
   );
 }

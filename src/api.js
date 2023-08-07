@@ -31,25 +31,6 @@ export function getAllVans(onUpdate) {
     });
 }
 
-export async function createProfile(user, uid, email, password, name) {
-
-
-    try {
-        await createUserWithEmailAndPassword(auth, email, password)
-
-        await updateProfile(user, {
-            displayName: name,
-        });
-        await updateDoc(doc(db, 'users', uid), {
-            name: name
-        })
-    } catch (err) {
-        console.log(err)
-    }
-
-}
-
-
 export async function updateName(user, uid, newName) {
 
     try {

@@ -1,7 +1,7 @@
 import { useState, useRef, useContext } from "react";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
-import { auth, createProfile, updateName } from "../api";
+import { auth } from "../api";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
