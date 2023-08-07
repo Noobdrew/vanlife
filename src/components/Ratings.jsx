@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import starEmpty from "../assets/star_filled.svg";
 import starFilled from "../assets/star_empty.svg";
 import { VanApiContext } from "../App";

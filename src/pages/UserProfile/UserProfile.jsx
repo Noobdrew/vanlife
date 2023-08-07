@@ -6,7 +6,7 @@ import {
   updateEmail,
   updateProfile,
 } from "firebase/auth";
-import { auth } from "../../api";
+import { auth, updateName } from "../../api";
 import userIcon from "../../assets/user-circle.svg";
 import { useContext, useEffect, useState } from "react";
 import { VanApiContext } from "../../App";
@@ -46,9 +46,7 @@ export default function UserProfile() {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (tempUserName !== auth.currentUser.displayName) {
-        updateProfile(auth.currentUser, {
-          displayName: tempUserName,
-        });
+        updateName(auth.currentUser, auth.currentUser.uid, tempUserName);
         console.log(tempUserName);
         console.log("name changed");
         setPopupText(`Name changed to ${tempUserName}`);

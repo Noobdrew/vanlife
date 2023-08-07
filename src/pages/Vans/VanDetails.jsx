@@ -2,6 +2,7 @@ import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 import { VanApiContext } from "../../App";
 import Ratings from "../../components/Ratings";
+import Comments from "../../components/Comments";
 
 export default function VanDetails() {
   const params = useParams();
@@ -56,6 +57,7 @@ export default function VanDetails() {
               <p className="van-description">{currentVan.description}</p>
 
               <button className="confirm-button big">Rent this van</button>
+              <Comments currentVan={currentVan} />
             </div>
           </div>
         </>

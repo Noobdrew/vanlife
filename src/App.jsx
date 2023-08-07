@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
-import { auth, db, getAllVans } from "./api";
+import { auth, db, getAllVans, updateName } from "./api";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
 import AuthRequired from "./components/AuthRequired";
@@ -26,7 +26,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Login from "./pages/Login";
 import { onAuthStateChanged } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import CreateAccount from "./pages/CreateAccount";
+
 import UserProfile from "./pages/UserProfile/UserProfile";
 import Popup from "./components/Popup";
 import Signup from "./pages/Signup";
@@ -105,6 +105,11 @@ function App() {
       return snapshot.data();
     } else {
       await setDoc(docRef, data);
+      await updateName(
+        auth.currentUser,
+        auth.currentUser.uid,
+        auth.currentUser.displayName
+      );
     }
   }
   useEffect(() => {
@@ -123,6 +128,7 @@ function App() {
     console.log("new user");
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user) {
+        console.log(user.displayName);
         setCurrentUser(user);
         const data = await getUser(user?.uid);
         setUserData(data);
@@ -173,7 +179,7 @@ function App() {
                 */}
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
-            <Route path="signup" element={<CreateAccount />} />
+
             <Route path="resetpass" element={<ResetPassword />} />
 
             <Route element={<AuthRequired />}>

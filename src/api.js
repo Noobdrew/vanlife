@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
 import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -29,6 +29,40 @@ export function getAllVans(onUpdate) {
         }));
         onUpdate(vans);
     });
+}
+
+export async function createProfile(user, uid, email, password, name) {
+
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, password)
+
+        await updateProfile(user, {
+            displayName: name,
+        });
+        await updateDoc(doc(db, 'users', uid), {
+            name: name
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
+}
+
+
+export async function updateName(user, uid, newName) {
+
+    try {
+        await updateProfile(user, {
+            displayName: newName,
+        });
+        await updateDoc(doc(db, 'users', uid), {
+            name: newName
+        })
+    } catch (err) {
+        console.log(err)
+    }
+
 }
 
 export async function storeVanData(vanId, data) {
