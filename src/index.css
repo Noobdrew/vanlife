@@ -664,6 +664,37 @@ main.vans-container {
         margin-top: 50px;
         padding: 30px;
     }
+
+    .van-details-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .ratings-outer img {
+        min-width: auto;
+        margin: 0;
+        height: 20px;
+        width: 20px;
+    }
+}
+
+/*     Ratings component     */
+
+.ratings-outer {
+    display: flex;
+}
+
+.ratings-outer>img {
+    margin: 0;
+    height: 20px;
+
+}
+
+.van-details-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 /*   Host styling   */

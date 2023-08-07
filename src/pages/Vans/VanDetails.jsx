@@ -1,6 +1,7 @@
 import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 import { VanApiContext } from "../../App";
+import Ratings from "../../components/Ratings";
 
 export default function VanDetails() {
   const params = useParams();
@@ -11,6 +12,13 @@ export default function VanDetails() {
 
   const currentVanArr = vanData.filter((item) => item.id == params.id);
   const currentVan = currentVanArr[0];
+  const ratingsObj = currentVan.ratings;
+
+  const sumOfRatings = Object.values(ratingsObj).reduce(
+    (acc, value) => acc + value,
+    0
+  );
+  const ratingAvg = sumOfRatings / Object.keys(ratingsObj).length;
 
   return (
     <div className="van-detail-container">
@@ -27,20 +35,32 @@ export default function VanDetails() {
           <div className="van-detail">
             <img src={currentVan.imageUrl} className="van-details-img" />
             <div className="van-details-text">
-              <i className={`van-type ${currentVan.type} selected`}>
-                {currentVan.type[0].toUpperCase() + currentVan.type.slice(1)}
-              </i>
+              <div className="van-details-title">
+                <div className={`van-type ${currentVan.type} selected`}>
+                  {currentVan.type[0].toUpperCase() + currentVan.type.slice(1)}
+                </div>
+                <div className="van-details-rating">
+                  <Ratings
+                    ratingAvg={ratingAvg}
+                    ratingsObj={ratingsObj}
+                    currentVan={currentVan}
+                  />{" "}
+                  {ratingAvg.toFixed(1)}
+                </div>
+              </div>
+
               <h2>{currentVan.name}</h2>
               <p className="van-price">
                 <span>${currentVan.price}</span>/day
               </p>
               <p className="van-description">{currentVan.description}</p>
+
               <button className="confirm-button big">Rent this van</button>
             </div>
           </div>
         </>
       ) : (
-        <h2>Loading...</h2>
+        <h2>Van doesn't exist!</h2>
       )}
     </div>
   );

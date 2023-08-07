@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useSearchParams } from "react-router-dom";
 import VanElement from "../../components/VanElement";
-import { getVans } from "../../api";
+
 import { VanApiContext } from "../../App";
 
 export default function Vans() {

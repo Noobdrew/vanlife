@@ -6,7 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { createContext, useState, useEffect } from "react";
-import { auth, db, getVans } from "./api";
+import { auth, db, getAllVans } from "./api";
 import Layout from "./components/Layout";
 import HostLayout from "./components/HostLayout";
 import AuthRequired from "./components/AuthRequired";
@@ -104,25 +104,23 @@ function App() {
     if (snapshot.exists()) {
       return snapshot.data();
     } else {
-      //user db data goes here
       await setDoc(docRef, data);
     }
   }
-
   useEffect(() => {
     console.log("load vans");
-    async function loadVans() {
-      setLoading(true);
-      try {
-        const data = await getVans();
-        setVanData(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    }
+    const unsubscribe = getAllVans((vans) => {
+      setVanData(vans);
+      setLoading(false);
+    });
+    return () => {
+      console.log("vans unsub");
+      unsubscribe();
+    };
+  }, []);
 
+  useEffect(() => {
+    console.log("new user");
     const listen = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setCurrentUser(user);
@@ -134,12 +132,11 @@ function App() {
       }
     });
 
-    loadVans();
     return () => {
       listen();
     };
   }, []);
-  console.log(userData);
+
   if (loading)
     return (
       <div className="loader-conteiner">

@@ -15,7 +15,7 @@ export default function HostVanInfo() {
   const [type, setType] = useState(vanDetail.type);
   const [visibility, setVisibility] = useState(vanDetail.visibility);
   const [vanData, setVanData] = useState(vanDetail);
-  console.log(vanData);
+
   useEffect(() => {
     if (vanData !== vanDetail) {
       setLoading(true);
