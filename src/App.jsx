@@ -173,9 +173,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="vans" element={<Vans />} />
             <Route path="vans/:id" element={<VanDetails />} />
-            {/* login sets loged in as local storange/cookies
-                app.jsx fetches hostData after login is true with correct user id
-                */}
+
             <Route path="login" element={<Login />} />
             <Route path="signup" element={<Signup />} />
 
