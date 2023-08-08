@@ -1,9 +1,6 @@
-import { useContext, useEffect, useState } from "react";
-import starEmpty from "../assets/star_filled.svg";
-import starFilled from "../assets/star_empty.svg";
+import { useContext, useState } from "react";
 import { VanApiContext } from "../App";
-import { db, postRating } from "../api";
-import { doc, onSnapshot } from "firebase/firestore";
+import { postRating } from "../api";
 
 export default function Ratings({ ratingsObj, currentVan, disabled }) {
   const { currentUser, setPopupOpen, setPopupText } = useContext(VanApiContext);
@@ -19,7 +16,7 @@ export default function Ratings({ ratingsObj, currentVan, disabled }) {
     if (disabled) return;
     setRating(starCount);
   };
-  console.log();
+
   const handleMouseLeave = () => {
     setRating(ratingAvg);
   };

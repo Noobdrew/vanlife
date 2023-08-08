@@ -1,4 +1,4 @@
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useLocation, useParams, Link } from "react-router-dom";
 import { VanApiContext } from "../../App";
 import Ratings from "../../components/Ratings";
