@@ -11,7 +11,8 @@ export default function VanDetails() {
   const [commentObj, setCommentObj] = useState({});
   const location = useLocation();
 
-  const { vanData, currentUser } = useContext(VanApiContext);
+  const { vanData, currentUser, setPopupOpen, setPopupText } =
+    useContext(VanApiContext);
 
   const currentVanArr = vanData.filter((item) => item.id == params.id);
   const currentVan = currentVanArr[0];
@@ -29,9 +30,9 @@ export default function VanDetails() {
 
     setCommentObj({
       body: commentBody,
-      name: currentUser.displayName,
-      uid: currentUser.uid,
-      imgUrl: currentUser.photoURL,
+      name: currentUser?.displayName,
+      uid: currentUser?.uid,
+      imgUrl: currentUser?.photoURL,
       dateUTC: testDate.getTime(),
       dateFormated: newDate,
     });
@@ -40,7 +41,8 @@ export default function VanDetails() {
   function submitComment(e) {
     e.preventDefault();
 
-    console.log(commentObj);
+    setPopupText("Comment added!");
+    setPopupOpen(true);
     postComment(currentVan.id, commentObj);
   }
 
@@ -83,6 +85,7 @@ export default function VanDetails() {
                     id="post-comment"
                     maxLength={300}
                     onChange={(e) => setCommentBody(e.target.value)}
+                    disabled={!currentUser}
                     placeholder={
                       !currentUser
                         ? "You must login to post a comment!"

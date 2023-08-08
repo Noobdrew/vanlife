@@ -19,7 +19,7 @@ export default function Ratings({ ratingsObj, currentVan, disabled }) {
     if (disabled) return;
     setRating(starCount);
   };
-
+  console.log();
   const handleMouseLeave = () => {
     setRating(ratingAvg);
   };
@@ -69,7 +69,10 @@ export default function Ratings({ ratingsObj, currentVan, disabled }) {
           </svg>
         ))}
       </div>
-      <p>{ratingAvg.toFixed(1)}</p>
+      <p>
+        {ratingAvg.toFixed(1)}{" "}
+        <small>({Object?.keys(ratingsObj)?.length})</small>
+      </p>
     </div>
   );
 }

@@ -753,6 +753,7 @@ main.vans-container {
     border-radius: 10px;
     width: 150px;
     height: 30px;
+    cursor: pointer;
 }
 
 
@@ -767,7 +768,7 @@ main.vans-container {
     grid-template-rows: 50px 1fr;
     align-items: center;
     justify-items: start;
-    /* gap: 10px; */
+
 }
 
 .comment-body {
