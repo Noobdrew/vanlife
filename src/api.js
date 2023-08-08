@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCrE7nNQpM7y16fUGN4TSljIn4b8eYak6s",
@@ -62,7 +62,19 @@ export function getHostVans(hostId, onUpdate) {
     });
 }
 
+export async function postComment(vanId, newComment) {
+    const vansDocRef = doc(db, 'vans', vanId);
 
+    try {
+        await updateDoc(vansDocRef, {
+            comments: arrayUnion(newComment)
+        });
+
+        console.log("Comment added successfully!");
+    } catch (error) {
+        console.error("Error adding comment:", error);
+    }
+};
 export async function postRating(vanId, data) {
     updateDoc(doc(db, 'vans', vanId), data)
 

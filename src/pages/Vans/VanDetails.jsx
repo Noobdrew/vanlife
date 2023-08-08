@@ -3,23 +3,46 @@ import { useLocation, useParams, Link } from "react-router-dom";
 import { VanApiContext } from "../../App";
 import Ratings from "../../components/Ratings";
 import Comments from "../../components/Comments";
+import { postComment } from "../../api";
 
 export default function VanDetails() {
   const params = useParams();
-
+  const [commentBody, setCommentBody] = useState("");
+  const [commentObj, setCommentObj] = useState({});
   const location = useLocation();
 
-  const { vanData, error } = useContext(VanApiContext);
+  const { vanData, currentUser } = useContext(VanApiContext);
 
   const currentVanArr = vanData.filter((item) => item.id == params.id);
   const currentVan = currentVanArr[0];
   const ratingsObj = currentVan.ratings;
 
-  const sumOfRatings = Object.values(ratingsObj).reduce(
-    (acc, value) => acc + value,
-    0
-  );
-  const ratingAvg = sumOfRatings / Object.keys(ratingsObj).length;
+  const commentElements = currentVan.comments.map((item, index) => {
+    return <Comments key={index} comment={item} />;
+  });
+  useEffect(() => {
+    const testDate = new Date();
+    let month = testDate.getUTCMonth() + 1;
+    let day = testDate.getUTCDay();
+    let year = testDate.getUTCFullYear();
+    let newDate = `${day}/${month}/${year}`;
+
+    setCommentObj({
+      body: commentBody,
+      name: currentUser.displayName,
+      uid: currentUser.uid,
+      imgUrl: currentUser.photoURL,
+      dateUTC: testDate.getTime(),
+      dateFormated: newDate,
+    });
+  }, [commentBody]);
+
+  function submitComment(e) {
+    e.preventDefault();
+
+    console.log(commentObj);
+    postComment(currentVan.id, commentObj);
+  }
 
   return (
     <div className="van-detail-container">
@@ -52,7 +75,25 @@ export default function VanDetails() {
               <p className="van-description">{currentVan.description}</p>
 
               <button className="confirm-button big">Rent this van</button>
-              <Comments currentVan={currentVan} />
+              <div className="comments-outer">
+                <h3>Post a comment:</h3>
+                <form action="" onSubmit={submitComment}>
+                  <textarea
+                    name="post-comment"
+                    id="post-comment"
+                    maxLength={300}
+                    onChange={(e) => setCommentBody(e.target.value)}
+                    placeholder={
+                      !currentUser
+                        ? "You must login to post a comment!"
+                        : "Write your comment up to 300 characters."
+                    }
+                  ></textarea>
+                  <button disabled={!currentUser}>Send</button>
+                </form>
+
+                {commentElements}
+              </div>
             </div>
           </div>
         </>
