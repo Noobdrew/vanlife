@@ -1,17 +1,23 @@
 import { addDays, subDays } from "date-fns";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { flushSync } from "react-dom";
+import { getExcludedDates, rentVan } from "../api";
+import { VanApiContext } from "../App";
 
-export default function RentVanPopup({ currentVan, setRentVanOpen }) {
+export default function RentVanPopup({
+  currentVan,
+  setRentVanOpen,
+  excludedDates,
+}) {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
   const [validDate, setValidDate] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
   const [totalDays, setTotalDays] = useState();
-
-  const excludedDates = [new Date("2023-08-15"), new Date("2023-08-20")];
+  const { setPopupOpen, setPopupText } = useContext(VanApiContext);
+  useEffect(() => {}, []);
   const allDates = getDatesInRange(startDate, endDate);
 
   function getDatesInRange(startDate, endDate) {
@@ -43,6 +49,15 @@ export default function RentVanPopup({ currentVan, setRentVanOpen }) {
     setTotalCost(currentVan.price * allDates.length);
   }, [allDates]);
 
+  function confirmRentVan() {
+    if (!validDate) return;
+    console.log(allDates);
+    rentVan(currentVan.id, allDates);
+    setRentVanOpen(false);
+    setPopupText(`${currentVan.name} rented successfully!`);
+    setPopupOpen(true);
+  }
+
   return (
     <div className="popup-overlay">
       <div className="rent-van-inner">
@@ -52,16 +67,7 @@ export default function RentVanPopup({ currentVan, setRentVanOpen }) {
         </h3>
         <div>
           <h3>Rent Period:</h3>
-          {/* <DatePicker
-            selectsRange={true}
-            startDate={startDate}
-            endDate={endDate}
-            placeholderText="Select rental days"
-            onChange={(update) => {
-              setDateRange(update);
-            }}
-            isClearable={true}
-          /> */}
+
           <DatePicker
             selectsRange={true}
             startDate={dateRange[0]}
@@ -78,6 +84,7 @@ export default function RentVanPopup({ currentVan, setRentVanOpen }) {
               } else {
                 console.log("select valid date");
                 setValidDate(false);
+                setDateRange([null, null]);
               }
             }}
             excludeDates={excludedDates} // Pass the array of excluded dates
@@ -92,7 +99,9 @@ export default function RentVanPopup({ currentVan, setRentVanOpen }) {
           <small> ${totalCost}</small>
         </h3>
 
-        <button className="rent-van-submit">Submit</button>
+        <button className="rent-van-submit" onClick={confirmRentVan}>
+          Submit
+        </button>
         <button
           className="rent-van-cancel"
           onClick={(e) => setRentVanOpen(false)}

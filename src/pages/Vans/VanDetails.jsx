@@ -3,14 +3,14 @@ import { useLocation, useParams, Link } from "react-router-dom";
 import { VanApiContext } from "../../App";
 import Ratings from "../../components/Ratings";
 import Comments from "../../components/Comments";
-import { postComment } from "../../api";
+import { getExcludedDates, postComment } from "../../api";
 import RentVanPopup from "../../components/RentVanPopup";
 
 export default function VanDetails() {
   const params = useParams();
   const [commentBody, setCommentBody] = useState("");
   const [commentObj, setCommentObj] = useState({});
-  const [rentVanOpen, setRentVanOpen] = useState(true);
+  const [rentVanOpen, setRentVanOpen] = useState(false);
 
   const location = useLocation();
 
@@ -24,11 +24,12 @@ export default function VanDetails() {
   const commentElements = currentVan.comments.map((item, index) => {
     return <Comments key={index} comment={item} />;
   });
+
   useEffect(() => {
     const testDate = new Date();
-    let month = testDate.getUTCMonth() + 1;
-    let day = testDate.getUTCDay();
-    let year = testDate.getUTCFullYear();
+    let month = testDate.getMonth() + 1;
+    let day = testDate.getDate();
+    let year = testDate.getFullYear();
     let newDate = `${day}/${month}/${year}`;
 
     setCommentObj({
@@ -48,7 +49,20 @@ export default function VanDetails() {
     setPopupOpen(true);
     postComment(currentVan.id, commentObj);
   }
-  console.log(currentVan);
+  const [excludedDates, setExcludedDates] = useState([]);
+
+  useEffect(() => {
+    async function fetchExcludedDates() {
+      try {
+        const datesArray = await getExcludedDates(currentVan.id); // Assuming getExcludedDates returns a promise
+        setExcludedDates(datesArray);
+      } catch (error) {
+        console.error("Error fetching excluded dates:", error);
+      }
+    }
+
+    fetchExcludedDates();
+  }, [currentVan.id]);
   return (
     <div className="van-detail-container">
       {currentVan ? (
@@ -57,6 +71,7 @@ export default function VanDetails() {
             <RentVanPopup
               currentVan={currentVan}
               setRentVanOpen={setRentVanOpen}
+              excludedDates={excludedDates}
             />
           )}
           <Link
@@ -87,7 +102,9 @@ export default function VanDetails() {
               <div>
                 <button
                   className="confirm-button big"
-                  onClick={(e) => setRentVanOpen(true)}
+                  onClick={() => {
+                    setRentVanOpen(true);
+                  }}
                 >
                   Rent this van
                 </button>

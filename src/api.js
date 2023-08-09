@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc, arrayUnion } from "firebase/firestore";
+import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCrE7nNQpM7y16fUGN4TSljIn4b8eYak6s",
@@ -62,6 +62,49 @@ export function getHostVans(hostId, onUpdate) {
     });
 }
 
+export async function getExcludedDates(vanId) {
+    const vanDocRef = doc(db, 'vans', vanId);
+    try {
+        const docSnap = await getDoc(vanDocRef);
+        if (docSnap.exists()) {
+            const existingDatesArray = docSnap.data().rented || [];
+
+            // Convert Firestore Timestamps to JavaScript Date objects
+            return existingDatesArray.map((timestamp) => timestamp.toDate())
+
+
+        } else {
+            console.log('Document not found.');
+        }
+    } catch (error) {
+        console.error('Error fetching document data: ', error);
+    }
+
+}
+
+export async function rentVan(vanId, newDateArray) {
+    const vanDocRef = doc(db, 'vans', vanId);
+
+    try {
+        const docSnap = await getDoc(vanDocRef);
+        if (docSnap.exists()) {
+            const existingDatesArray = docSnap.data().rented || [];
+            const combinedArray = [...existingDatesArray, ...newDateArray];
+
+            // Update the Firestore document with the combined array of dates
+            await updateDoc(vanDocRef, {
+                rented: combinedArray
+            });
+
+            console.log('Dates array successfully updated in Firestore.');
+        } else {
+            console.log('Document not found.');
+        }
+    } catch (error) {
+        console.error('Error updating dates array in Firestore: ', error);
+    }
+}
+
 export async function postComment(vanId, newComment) {
     const vansDocRef = doc(db, 'vans', vanId);
 
@@ -77,9 +120,6 @@ export async function postComment(vanId, newComment) {
 };
 export async function postRating(vanId, data) {
     updateDoc(doc(db, 'vans', vanId), data)
-
-
-
 }
 export async function loginUser(creds) {
     const res = await fetch("/api/login",
