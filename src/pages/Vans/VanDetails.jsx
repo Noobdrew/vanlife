@@ -4,11 +4,14 @@ import { VanApiContext } from "../../App";
 import Ratings from "../../components/Ratings";
 import Comments from "../../components/Comments";
 import { postComment } from "../../api";
+import RentVanPopup from "../../components/RentVanPopup";
 
 export default function VanDetails() {
   const params = useParams();
   const [commentBody, setCommentBody] = useState("");
   const [commentObj, setCommentObj] = useState({});
+  const [rentVanOpen, setRentVanOpen] = useState(true);
+
   const location = useLocation();
 
   const { vanData, currentUser, setPopupOpen, setPopupText } =
@@ -45,11 +48,17 @@ export default function VanDetails() {
     setPopupOpen(true);
     postComment(currentVan.id, commentObj);
   }
-
+  console.log(currentVan);
   return (
     <div className="van-detail-container">
       {currentVan ? (
         <>
+          {rentVanOpen && (
+            <RentVanPopup
+              currentVan={currentVan}
+              setRentVanOpen={setRentVanOpen}
+            />
+          )}
           <Link
             relative="path"
             to={location.state?.search ? `..${location.state.search}` : ".."}
@@ -75,15 +84,24 @@ export default function VanDetails() {
                 <span>${currentVan.price}</span>/day
               </p>
               <p className="van-description">{currentVan.description}</p>
+              <div>
+                <button
+                  className="confirm-button big"
+                  onClick={(e) => setRentVanOpen(true)}
+                >
+                  Rent this van
+                </button>
+              </div>
 
-              <button className="confirm-button big">Rent this van</button>
               <div className="comments-outer">
                 <h3>Post a comment:</h3>
                 <form action="" onSubmit={submitComment}>
                   <textarea
                     name="post-comment"
                     id="post-comment"
+                    minLength={3}
                     maxLength={300}
+                    required
                     onChange={(e) => setCommentBody(e.target.value)}
                     disabled={!currentUser}
                     placeholder={
