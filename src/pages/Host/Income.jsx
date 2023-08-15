@@ -17,12 +17,16 @@ export default function Income() {
   });
 
   useEffect(() => {
+    const last12IncomeData = userData?.income?.slice(-12);
+
     setChartData({
-      labels: userData.income.map((data) => data.month),
+      labels: last12IncomeData?.map(
+        (data) => `${data?.month} ${data?.year.toString().slice(2)}`
+      ),
       datasets: [
         {
-          label: "Income this year",
-          data: userData.income.map((data) => data.income),
+          label: "Income per month",
+          data: last12IncomeData?.map((data) => data?.income),
           backgroundColor: ["#FF8C38"],
         },
       ],

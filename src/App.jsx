@@ -46,56 +46,7 @@ function App() {
 
   async function getUser(uid) {
     let data = {
-      income: [
-        {
-          id: 1,
-          year: 2023,
-          month: "January",
-          income: 0,
-        },
-        {
-          id: 2,
-          year: 2023,
-          month: "February",
-          income: 0,
-        },
-        {
-          id: 3,
-          year: 2023,
-          month: "March",
-          income: 0,
-        },
-        {
-          id: 4,
-          year: 2023,
-          month: "April",
-          income: 0,
-        },
-        {
-          id: 5,
-          year: 2023,
-          month: "May",
-          income: 0,
-        },
-        {
-          id: 6,
-          year: 2023,
-          month: "June",
-          income: 0,
-        },
-        {
-          id: 7,
-          year: 2023,
-          month: "July",
-          income: 0,
-        },
-        {
-          id: 8,
-          year: 2023,
-          month: "August",
-          income: 0,
-        },
-      ],
+      income: [],
       transactions: [],
     };
     const docRef = doc(db, "users", uid);

@@ -72,7 +72,6 @@ export async function getExcludedDates(vanId) {
             // Convert Firestore Timestamps to JavaScript Date objects
             return existingDatesArray.map((timestamp) => timestamp.toDate())
 
-
         } else {
             console.log('Document not found.');
         }
@@ -82,13 +81,12 @@ export async function getExcludedDates(vanId) {
 
 }
 
-export async function rentVan(vanId, newDateArray) {
+async function storeRentDates(vanId, newDateArray,) {
     const vanDocRef = doc(db, 'vans', vanId);
-
     try {
-        const docSnap = await getDoc(vanDocRef);
-        if (docSnap.exists()) {
-            const existingDatesArray = docSnap.data().rented || [];
+        const vanDocSnap = await getDoc(vanDocRef);
+        if (vanDocSnap.exists()) {
+            const existingDatesArray = vanDocSnap.data().rented || [];
             const combinedArray = [...existingDatesArray, ...newDateArray];
 
             // Update the Firestore document with the combined array of dates
@@ -102,6 +100,92 @@ export async function rentVan(vanId, newDateArray) {
         }
     } catch (error) {
         console.error('Error updating dates array in Firestore: ', error);
+    }
+}
+
+async function calculateIncome(transactionObj, hostId) {
+    const monthNum = transactionObj.timestamp.getMonth();
+    const year = transactionObj.timestamp.getFullYear();
+    const newIncome = transactionObj.price;
+
+    const userDocRef = doc(db, 'users', hostId);
+
+    try {
+        const docSnap = await getDoc(userDocRef); // Read operation
+
+        if (docSnap.exists()) {
+            const dataArray = docSnap.data().income || [];
+            let entryFound = false;
+
+            for (const entry of dataArray) {
+                if (entry.monthNum === monthNum && entry.year === year) {
+                    entry.income += newIncome; // Modify the income directly
+                    entryFound = true;
+                    break;
+                }
+            }
+
+            if (!entryFound) {
+                // Calculate the month name based on the month number
+                const monthNames = [
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                ];
+                const monthName = monthNames[monthNum];
+
+                // Push a new object with month name to the array
+                dataArray.push({
+                    monthNum,
+                    year,
+                    income: newIncome,
+                    month: monthName,
+                });
+            }
+
+            console.log(dataArray);
+
+            // Update the document with the modified income array
+            await updateDoc(userDocRef, { income: dataArray }); // Write operation
+            console.log('Income updated successfully.');
+        } else {
+            console.log('Document does not exist.');
+        }
+    } catch (error) {
+        console.error('Error updating income: ', error);
+    }
+}
+
+async function storeRentTransaction(hostId, transactionObj) {
+    const userDocRef = doc(db, 'users', hostId)
+
+    try {
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+            const transactionArray = userDocSnap.data().transactions || [];
+            transactionArray.push(transactionObj)
+
+            // Update the Firestore document with the combined array of dates
+            await updateDoc(userDocRef, {
+                transactions: transactionArray
+            });
+
+            console.log('Dates array successfully updated in Firestore.');
+        } else {
+            console.log('Document not found.');
+        }
+    } catch (error) {
+        console.error('Error updating dates array in Firestore: ', error);
+    }
+}
+
+export async function rentVan(vanId, newDateArray, hostId, transactionObj) {
+    try {
+        await storeRentTransaction(hostId, transactionObj)
+        await calculateIncome(transactionObj, hostId)
+        await storeRentDates(vanId, newDateArray)
+
+    } catch (err) {
+        console.log(err)
     }
 }
 
@@ -120,20 +204,4 @@ export async function postComment(vanId, newComment) {
 };
 export async function postRating(vanId, data) {
     updateDoc(doc(db, 'vans', vanId), data)
-}
-export async function loginUser(creds) {
-    const res = await fetch("/api/login",
-        { method: "post", body: JSON.stringify(creds) }
-    )
-    const data = await res.json()
-
-    if (!res.ok) {
-        throw {
-            message: data.message,
-            statusText: res.statusText,
-            status: res.status
-        }
-    }
-
-    return data
 }

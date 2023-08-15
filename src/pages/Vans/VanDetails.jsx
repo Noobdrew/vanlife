@@ -11,6 +11,7 @@ export default function VanDetails() {
   const [commentBody, setCommentBody] = useState("");
   const [commentObj, setCommentObj] = useState({});
   const [rentVanOpen, setRentVanOpen] = useState(false);
+  const [excludedDates, setExcludedDates] = useState([]);
 
   const location = useLocation();
 
@@ -49,12 +50,11 @@ export default function VanDetails() {
     setPopupOpen(true);
     postComment(currentVan.id, commentObj);
   }
-  const [excludedDates, setExcludedDates] = useState([]);
 
   useEffect(() => {
     async function fetchExcludedDates() {
       try {
-        const datesArray = await getExcludedDates(currentVan.id); // Assuming getExcludedDates returns a promise
+        const datesArray = await getExcludedDates(currentVan.id);
         setExcludedDates(datesArray);
       } catch (error) {
         console.error("Error fetching excluded dates:", error);
@@ -62,7 +62,7 @@ export default function VanDetails() {
     }
 
     fetchExcludedDates();
-  }, [currentVan.id]);
+  }, [rentVanOpen]);
   return (
     <div className="van-detail-container">
       {currentVan ? (

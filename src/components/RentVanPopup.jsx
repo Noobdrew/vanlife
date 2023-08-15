@@ -15,10 +15,16 @@ export default function RentVanPopup({
   const [startDate, endDate] = dateRange;
   const [validDate, setValidDate] = useState(false);
   const [totalCost, setTotalCost] = useState(0);
-  const [totalDays, setTotalDays] = useState();
+
   const { setPopupOpen, setPopupText } = useContext(VanApiContext);
-  useEffect(() => {}, []);
+
   const allDates = getDatesInRange(startDate, endDate);
+
+  function getMonthName(monthNumber) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+    return date.toLocaleString("en-US", { month: "long" });
+  }
 
   function getDatesInRange(startDate, endDate) {
     const dates = [];
@@ -40,22 +46,53 @@ export default function RentVanPopup({
     );
   };
 
-  const isAnyDateExcluded = (dates) =>
-    dates.some((date) =>
+  const isAnyDateExcluded = (dates) => {
+    return dates.some((date) =>
       excludedDates.some((excludedDate) => areDatesEqual(date, excludedDate))
     );
+  };
+
+  const isAnyDateInPast = (startDate) => {
+    if (startDate < new Date()) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   useEffect(() => {
     setTotalCost(currentVan.price * allDates.length);
   }, [allDates]);
 
+  function formatDate(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear());
+
+    return `${day}/${month}/${year}`;
+  }
+
   function confirmRentVan() {
     if (!validDate) return;
     console.log(allDates);
-    rentVan(currentVan.id, allDates);
-    setRentVanOpen(false);
-    setPopupText(`${currentVan.name} rented successfully!`);
-    setPopupOpen(true);
+
+    const currentDate = new Date();
+    const formattedDate = formatDate(currentDate);
+    const transactionObj = {
+      date: formattedDate,
+      timestamp: currentDate,
+      price: totalCost,
+      vanName: currentVan.name,
+    };
+    try {
+      rentVan(currentVan.id, allDates, currentVan.hostId, transactionObj);
+
+      setRentVanOpen(false);
+      setPopupText(`${currentVan.name} rented successfully!`);
+      setPopupOpen(true);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -64,6 +101,7 @@ export default function RentVanPopup({
         <img src={currentVan.imageUrl} alt="van img" className="rent-van-img" />
         <h3>
           Van Name: <small> {currentVan.name}</small>
+          {!validDate && <p className="danger">Enter a valid date</p>}
         </h3>
         <div>
           <h3>Rent Period:</h3>
@@ -77,7 +115,8 @@ export default function RentVanPopup({
 
               // Check if the new date range includes excluded dates
               if (
-                !isAnyDateExcluded(getDatesInRange(newStartDate, newEndDate))
+                !isAnyDateExcluded(getDatesInRange(newStartDate, newEndDate)) &&
+                !isAnyDateInPast(newStartDate)
               ) {
                 setDateRange(update);
                 setValidDate(true);
@@ -89,7 +128,6 @@ export default function RentVanPopup({
             }}
             excludeDates={excludedDates} // Pass the array of excluded dates
           />
-          {!validDate && <p className="danger">Enter a valid date</p>}
         </div>
         <h3>
           Number of days: <small>{allDates.length}</small>
