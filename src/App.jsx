@@ -136,7 +136,7 @@ function App() {
               <Route path="/host" element={<HostLayout />}>
                 <Route index element={<Dashboard />} />
                 <Route path="income" element={<Income />} />
-                <Route path="reviews" element={<Reviews />} />
+
                 <Route path="vans" element={<HostVans />} />
                 <Route path="vans/:id" element={<HostVansDetails />}>
                   <Route index element={<HostVanInfo />} />

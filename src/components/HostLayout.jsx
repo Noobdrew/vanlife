@@ -52,12 +52,6 @@ export default function HostLayout() {
         >
           Vans
         </NavLink>
-        <NavLink
-          to="reviews"
-          style={({ isActive }) => (isActive ? activeStyle : null)}
-        >
-          Reviews
-        </NavLink>
       </nav>
       <Outlet context={[hostVansData, setHostVansData, error]} />
     </>
