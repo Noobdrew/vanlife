@@ -15,7 +15,7 @@ export default function Vans() {
     { t2: luxuryFilter },
     { t3: ruggedFilter },
   ];
-
+  console.log("van page load");
   const { vanData, error } = useContext(VanApiContext);
 
   function filterByConditions(array, conditions) {

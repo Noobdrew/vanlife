@@ -14,3 +14,4 @@ what i need to do to finish project
 10. - [x] create user page for user controlls (change password, change name, set icon etc)
 11. Fix host dashboard page
 12. Make it possible for users to add more vans.
+13. Add sorting func for price (low-high, high-low) to van page
