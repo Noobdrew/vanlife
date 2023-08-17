@@ -7,11 +7,12 @@ import {
   useOutletContext,
 } from "react-router-dom";
 import { VanApiContext } from "../../App";
-import ErrorPage from "../ErrorPage";
+import Comments from "../../components/Comments";
+import { removeCommentAt, toggleCommentVisibility } from "../../api";
 
 export default function HostVansDetails() {
   const { currentUser } = useContext(VanApiContext);
-  //placeholder host id
+
   const hostId = currentUser.uid;
   const params = useParams();
   const [hostVansData, error] = useOutletContext();
@@ -24,8 +25,45 @@ export default function HostVansDetails() {
   };
   if (error?.message) return <h1>There was an error: {error.message}</h1>;
 
-  if (vanDetail?.hostId != hostId)
+  if (vanDetail?.hostId != hostId) {
     return <h1>Van not found in current user's vans!</h1>;
+  }
+
+  async function deleteComment(index, vanId) {
+    try {
+      await removeCommentAt(index, vanId);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function hideComment(index, vanId) {
+    try {
+      await toggleCommentVisibility(index, vanId);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const commentElements = vanDetail.comments.map((item, index) => {
+    return (
+      <div key={index} className="">
+        <Comments comment={item} />
+        <button
+          className="comment-hide"
+          onClick={(e) => hideComment(index, vanDetail.id)}
+        >
+          {item.visible ? "Hide" : "Show"}
+        </button>
+        <button
+          className="comment-delete"
+          onClick={(e) => deleteComment(index, vanDetail.id)}
+        >
+          Delete
+        </button>
+      </div>
+    );
+  });
 
   return (
     <>
@@ -49,28 +87,8 @@ export default function HostVansDetails() {
           </p>
         </div>
 
-        <nav className="host-van-details-nav">
-          {/* <NavLink
-            end
-            to={"."}
-            style={({ isActive }) => (isActive ? activeStyle : null)}
-          >
-            Details
-          </NavLink>
-          <NavLink
-            to={"pricing"}
-            style={({ isActive }) => (isActive ? activeStyle : null)}
-          >
-            Pricing
-          </NavLink>
-          <NavLink
-            to={"photos"}
-            style={({ isActive }) => (isActive ? activeStyle : null)}
-          >
-            Photos
-          </NavLink> */}
-        </nav>
         <Outlet context={{ vanDetail }} />
+        <div className="host-comments"> {commentElements}</div>
       </div>
     </>
   );

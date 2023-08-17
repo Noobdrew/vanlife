@@ -38,7 +38,7 @@ export default function Income() {
       <RecentTransactions key={item.date} price={item.price} date={item.date} />
     );
   });
-
+  transElements.reverse();
   return (
     <div className="income-container">
       <h1 className="host-title">Income</h1>

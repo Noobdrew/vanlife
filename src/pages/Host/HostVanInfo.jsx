@@ -104,21 +104,6 @@ export default function HostVanInfo() {
         </select>
         <button className="confirm-button big">Save changes</button>
       </form>
-      {/* <p>
-        <strong>Name: </strong>
-        {vanDetail.name}
-      </p>
-      <p>
-        <strong>Type: </strong>
-        {vanDetail.type[0].toUpperCase() + vanDetail.type.slice(1)}
-      </p>
-      <p>
-        <strong>Description: </strong>
-        {vanDetail.description}
-      </p>
-      <p>
-        <strong>Visibility: </strong> Public
-      </p> */}
     </div>
   );
 }

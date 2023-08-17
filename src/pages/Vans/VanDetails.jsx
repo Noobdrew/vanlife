@@ -23,6 +23,7 @@ export default function VanDetails() {
   const ratingsObj = currentVan.ratings;
 
   const commentElements = currentVan.comments.map((item, index) => {
+    if (!item?.visible) return;
     return <Comments key={index} comment={item} />;
   });
 

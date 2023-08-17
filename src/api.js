@@ -202,6 +202,58 @@ export async function postComment(vanId, newComment) {
         console.error("Error adding comment:", error);
     }
 };
+
+export async function removeCommentAt(indexToRemove, vanId) {
+    try {
+        const documentRef = doc(db, 'vans', vanId);
+        const docSnapshot = await getDoc(documentRef);
+
+        if (docSnapshot.exists()) {
+            const comments = docSnapshot.data().comments || [];
+
+            // Check if the comment index is valid
+            if (indexToRemove >= 0 && indexToRemove < comments.length) {
+                comments.splice(indexToRemove, 1); // Remove the comment at the specified index
+                await updateDoc(documentRef, { comments: comments });
+                console.log('Comment removed successfully.');
+            } else {
+                console.log('Invalid comment index.');
+            }
+        } else {
+            console.log('Document does not exist.');
+        }
+    } catch (error) {
+        console.error('Error removing comment:', error);
+    }
+}
+
+export async function toggleCommentVisibility(indexToToggle, vanId) {
+    try {
+        const documentRef = doc(db, 'vans', vanId);
+        const docSnapshot = await getDoc(documentRef);
+
+        if (docSnapshot.exists()) {
+            const comments = docSnapshot.data().comments || [];
+
+            // Check if the comment index is valid
+            if (indexToToggle >= 0 && indexToToggle < comments.length) {
+                // Toggle the "visible" property
+                comments[indexToToggle].visible = !comments[indexToToggle].visible;
+
+                // Step 3: Update the modified document back to Firestore
+                await updateDoc(documentRef, { comments: comments });
+                console.log('Comment visibility toggled.');
+            } else {
+                console.log('Invalid comment index.');
+            }
+        } else {
+            console.log('Document does not exist.');
+        }
+    } catch (error) {
+        console.error('Error toggling comment visibility:', error);
+    }
+}
+
 export async function postRating(vanId, data) {
     updateDoc(doc(db, 'vans', vanId), data)
 }

@@ -5,10 +5,6 @@ import { VanApiContext } from "../../App";
 import { collectionGroup } from "firebase/firestore";
 
 export default function HostVans() {
-  //placeholder host id
-  const hostId = 123;
-  //this is not good
-  //use fetch host vans on host layout page
   const [hostVans, setHostVans] = useState([]);
 
   const [hostVansData, error] = useOutletContext();

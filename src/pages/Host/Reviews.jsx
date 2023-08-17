@@ -1,3 +1,10 @@
+import { useOutletContext } from "react-router-dom";
+import Comments from "../../components/Comments";
+
 export default function Reviews() {
-  return <h1>Reviews element</h1>;
+  return (
+    <div className="host-reviews-container">
+      <h1 className="host-reviews-title host-title">Reviews</h1>
+    </div>
+  );
 }
