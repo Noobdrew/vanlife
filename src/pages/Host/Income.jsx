@@ -2,9 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { VanApiContext } from "../../App";
 import BarChart from "../../components/BarChart";
 import RecentTransactions from "../../components/RecentTransactions";
+import TransactionsContainer from "../../components/TransactionsContainer";
 
 export default function Income() {
   const { userData, currentUser } = useContext(VanApiContext);
+  const [dayFilter, setDayFilter] = useState("30-days");
   const [chartData, setChartData] = useState({
     labels: userData?.income?.map((data) => data.month),
     datasets: [
@@ -33,12 +35,6 @@ export default function Income() {
     });
   }, [currentUser]);
 
-  const transElements = userData?.transactions.map((item) => {
-    return (
-      <RecentTransactions key={item.date} price={item.price} date={item.date} />
-    );
-  });
-  transElements.reverse();
   return (
     <div className="income-container">
       <h1 className="host-title">Income</h1>
@@ -50,7 +46,8 @@ export default function Income() {
 
         <div className="transaction-outer">
           {" "}
-          <h2>Your transactions</h2> {transElements}
+          <h2>Your transactions </h2>
+          <TransactionsContainer userData={userData} />
         </div>
       </div>
     </div>

@@ -21,6 +21,24 @@ body {
     color: #FF3D00;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #a8a8a8;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 
 h1,
 h2,
@@ -901,6 +919,50 @@ main.vans-container {
     font-weight: 600;
 }
 
+/*     Host Dashboard     */
+.dashboard-income-container {
+    background-color: var(--dark-white);
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+.dashboard-income {
+
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 100px;
+    grid-template-rows: repeat(3, 1fr)
+}
+
+.dashboard-income-filter {
+    display: flex;
+    grid-row: 2/3;
+    grid-column: 1/2;
+}
+
+#income-filter {
+    border: none;
+    font-weight: bold;
+    font-size: 15px;
+    text-decoration: underline;
+    background-color: transparent;
+}
+
+.dashboard-link {
+    justify-self: end;
+    grid-row: 2/3;
+    grid-column: 2/3;
+    font-weight: 500;
+    text-decoration: underline;
+}
+
+.dashboard-total-income {
+    grid-row: 3/4;
+    grid-column: 1/2;
+    font-size: 30px;
+    justify-self: start;
+}
+
 /*   Host van elements styling   */
 
 
@@ -1007,8 +1069,16 @@ main.vans-container {
 }
 
 .transaction-outer {
-    margin: 0 30px;
+    margin: 0 15px;
+}
 
+.transaction-inner {
+    height: 400px;
+    background-color: var(--dark-white);
+    padding: 20px;
+    border-radius: 15px;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 .transaction-outer>h2 {
@@ -1026,7 +1096,7 @@ main.vans-container {
     margin-bottom: 15px;
     display: flex;
     background-color: white;
-    min-width: 300px;
+    min-width: 270px;
     max-width: 900px;
 
 }
@@ -1045,7 +1115,10 @@ main.vans-container {
 
     .transaction-outer {
         width: 50vw;
+
     }
+
+
 
     .transaction-outer>h2 {
         margin-bottom: 20px;
