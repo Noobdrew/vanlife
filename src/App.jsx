@@ -106,6 +106,7 @@ function App() {
       value={{
         vanData,
         loading,
+        setLoading,
         error,
         currentUser,
         popupOpen,

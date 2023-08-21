@@ -7,6 +7,7 @@
     --accent-simple: #E17654;
     --accent-rugged: #115E59;
     --accent-luxury: #161616;
+    --main-red: #FF3D00;
     --box-shadow1: 2px 2px 3px rgba(77, 77, 77, 0.486);
     --light-border: 1px solid rgb(207, 207, 207);
 }
@@ -98,6 +99,7 @@ a {
 }
 
 .popup-outer {
+
     pointer-events: none;
     display: flex;
     justify-content: center;
@@ -105,6 +107,60 @@ a {
     top: -100px;
     left: 0;
     right: 0;
+}
+
+.popup-confirm-outer {
+    height: 100vh;
+    background: rgba(68, 68, 68, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.popup-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.popup-button {
+    cursor: pointer;
+    padding: 3px;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-family: 'inter', sans-serif;
+
+}
+
+.delete {
+    background-color: var(--accent-rugged);
+}
+
+.cancel {
+    background-color: var(--main-red);
+}
+
+.popup-confirm-inner {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+    max-width: 300px;
+    box-shadow: var(--box-shadow1);
 }
 
 .hidden {
@@ -628,6 +684,8 @@ main.vans-container {
 
 .van-detail img {
     max-width: 600px;
+    min-width: 200px;
+
     border-radius: 5px;
     margin-block: 47px;
 }
@@ -687,13 +745,15 @@ main.vans-container {
 
     .van-detail img {
         border-radius: 20px;
-        width: 800px;
+        object-fit: cover;
+        width: 500px;
+        height: 500px;
         min-width: 350px;
     }
 
     .van-details-text {
         max-width: 700px;
-
+        width: 700px;
         margin-top: 50px;
         padding: 30px;
     }
@@ -989,6 +1049,31 @@ main.vans-container {
     width: 300px;
 }
 
+.new-van-outer {
+    position: relative;
+}
+
+.new-van {
+
+    filter: blur(7px);
+
+}
+
+.add-new-van {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+}
+
+.add-new-van-button {
+    margin: 0;
+    height: 45px;
+    max-width: 250px;
+}
+
 .host-title {
     margin-left: 20px;
     color: #161616;
@@ -1169,8 +1254,19 @@ main.vans-container {
     width: 100px;
 }
 
+.delete-van {
+    grid-column: 1/3;
+    background-color: var(--main-red);
+}
+
+.delete-van:hover {
+    background-color: #ce3405;
+
+}
+
+
 .comment-delete {
-    background-color: #FF3D00;
+    background-color: var(--main-red);
 }
 
 .comment-hide {
@@ -1278,8 +1374,13 @@ textarea {
         padding: 30px;
         margin: 20px 5vw;
         grid-template-columns: 400px 1fr;
-        grid-template-rows: repeat(9, 50px);
+        grid-template-rows: repeat(10, 50px);
         column-gap: 50px;
+    }
+
+    .delete-van {
+        grid-row: 10/11;
+        grid-column: 2/3;
     }
 
     .host-van-details-img {

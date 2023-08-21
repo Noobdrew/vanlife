@@ -13,6 +13,7 @@ what i need to do to finish project
 9. - [x] make it possible to register new users
 10. - [x] create user page for user controlls (change password, change name, set icon etc)
 11. -[x] Fix host dashboard page
-12. Make it possible for users to add more vans.
-13. Add sorting func for price (low-high, high-low) to van page
-14. change getAllvans func to get only vans that are set to visible
+12. -[x] Make it possible for users to add more vans.
+13. -[x] Make it possible for users to delete vans (works on only on newly added vans)
+14. Add sorting func for price (low-high, high-low) to van page
+15. change getAllvans func to get only vans that are set to visible

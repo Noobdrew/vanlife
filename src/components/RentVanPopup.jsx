@@ -1,9 +1,7 @@
-import { addDays, subDays } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { flushSync } from "react-dom";
-import { getExcludedDates, rentVan } from "../api";
+import { rentVan } from "../api";
 import { VanApiContext } from "../App";
 
 export default function RentVanPopup({
@@ -19,12 +17,6 @@ export default function RentVanPopup({
   const { setPopupOpen, setPopupText } = useContext(VanApiContext);
 
   const allDates = getDatesInRange(startDate, endDate);
-
-  function getMonthName(monthNumber) {
-    const date = new Date();
-    date.setMonth(monthNumber - 1);
-    return date.toLocaleString("en-US", { month: "long" });
-  }
 
   function getDatesInRange(startDate, endDate) {
     const dates = [];
@@ -142,7 +134,7 @@ export default function RentVanPopup({
         </button>
         <button
           className="rent-van-cancel"
-          onClick={(e) => setRentVanOpen(false)}
+          onClick={() => setRentVanOpen(false)}
         >
           Cancel
         </button>

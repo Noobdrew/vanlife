@@ -1,6 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, updateProfile } from "firebase/auth";
-import { collection, getDocs, getFirestore, where, query, setDoc, doc, onSnapshot, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import { getAuth, updateProfile } from "firebase/auth";
+import {
+    collection,
+    getFirestore,
+    where,
+    query,
+    setDoc,
+    doc,
+    onSnapshot,
+    updateDoc,
+    arrayUnion,
+    getDoc,
+    addDoc,
+    deleteDoc
+} from "firebase/firestore";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCrE7nNQpM7y16fUGN4TSljIn4b8eYak6s",
@@ -257,3 +270,29 @@ export async function toggleCommentVisibility(indexToToggle, vanId) {
 export async function postRating(vanId, data) {
     updateDoc(doc(db, 'vans', vanId), data)
 }
+
+export async function addNewVan(vanData) {
+    try {
+        // Get the vans collection reference
+        const vansCollection = collection(db, 'vans');
+
+        // Add a new van document with auto-generated ID
+        const newVanDocRef = await addDoc(vansCollection, vanData);
+
+        console.log('New van added with ID:', newVanDocRef.id);
+        return newVanDocRef
+    } catch (error) {
+        console.error('Error adding van:', error);
+    }
+};
+
+export async function removeVan(vanId) {
+    try {
+        const vanRef = doc(db, 'vans', vanId);
+        await deleteDoc(vanRef);
+        console.log('Van removed successfully:', vanId);
+    } catch (error) {
+        console.error('Error removing van:', error);
+        throw error;
+    }
+};
