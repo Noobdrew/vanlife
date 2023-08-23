@@ -105,12 +105,12 @@ export default function HostVansDetails() {
         </div>
 
         <Outlet context={{ vanDetail }} />
-        <button
+        {/* <button
           className="confirm-button big delete-van"
           onClick={confirmDelete}
         >
           Delete Van
-        </button>
+        </button> */}
         <div className="host-comments"> {commentElements}</div>
       </div>
     </>

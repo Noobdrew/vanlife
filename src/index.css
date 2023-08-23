@@ -1379,12 +1379,20 @@ textarea {
 
 }
 
+.host-button-holder {
+    width: 100%;
+    display: flex;
+    gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (min-width:1000px) {
     .host-van-details-container {
         padding: 30px;
         margin: 20px 5vw;
         grid-template-columns: 400px 1fr;
-        grid-template-rows: repeat(10, 50px);
+        grid-template-rows: repeat(9, 50px);
         column-gap: 50px;
     }
 
