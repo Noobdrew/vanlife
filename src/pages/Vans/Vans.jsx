@@ -5,6 +5,8 @@ import VanElement from "../../components/VanElement";
 import { VanApiContext } from "../../App";
 
 export default function Vans() {
+  const [sortBy, setSortBy] = useState("price");
+  const [sortOrder, setSortOrder] = useState("low-high");
   const [searchParams, setSearchParams] = useSearchParams();
   const simpleFilter = searchParams.get("t1");
   const luxuryFilter = searchParams.get("t2");
@@ -15,8 +17,18 @@ export default function Vans() {
     { t2: luxuryFilter },
     { t3: ruggedFilter },
   ];
-  console.log("van page load");
+
   const { vanData, error } = useContext(VanApiContext);
+
+  function removeHiddenVans(array) {
+    let arr = [];
+    for (let i = 0; i < array.length; i++) {
+      const element = array[i];
+      if (element.visibility === "public") arr.push(element);
+    }
+    return arr;
+  }
+  const visibleVans = removeHiddenVans(vanData);
 
   function filterByConditions(array, conditions) {
     const arr = [];
@@ -30,13 +42,58 @@ export default function Vans() {
         }
       }
     });
-    if (arr.length == 0) return vanData;
+
+    if (arr.length == 0) return visibleVans;
     else return arr;
   }
+  function handleFilter(key, value) {
+    setSearchParams((prevParams) => {
+      if (!prevParams.has(key)) {
+        prevParams.append(key, value);
+      } else {
+        prevParams.delete(key);
+      }
+      return prevParams;
+    });
+  }
+  const filtered = filterByConditions(visibleVans, condition);
 
-  const filtered = filterByConditions(vanData, condition);
+  const sortedData = [...filtered];
 
-  const VanElements = filtered.map((van) => {
+  const calculateAverageRating = (ratings) => {
+    const ratingValues = Object.values(ratings);
+    if (ratingValues.length === 0) {
+      return 0;
+    }
+
+    const sum = ratingValues.reduce((total, rating) => total + rating, 0);
+    return sum / ratingValues.length;
+  };
+
+  const sortVans = (e) => {
+    const selectedValue = e.target.value;
+    if (selectedValue === "high-low" || selectedValue === "low-high") {
+      setSortBy("price");
+      setSortOrder(selectedValue);
+    } else if (selectedValue === "rating") {
+      setSortBy("rating");
+      setSortOrder("high-low");
+    }
+  };
+
+  sortedData.sort((a, b) => {
+    if (sortBy === "price") {
+      return sortOrder === "low-high" ? a.price - b.price : b.price - a.price;
+    } else if (sortBy === "rating") {
+      const avgRatingA = calculateAverageRating(a.ratings);
+      const avgRatingB = calculateAverageRating(b.ratings);
+      return sortOrder === "low-high"
+        ? avgRatingA - avgRatingB
+        : avgRatingB - avgRatingA;
+    }
+  });
+
+  const VanElements = sortedData.map((van) => {
     return (
       <Link
         state={{ search: `?${searchParams.toString()}` }}
@@ -55,16 +112,6 @@ export default function Vans() {
     );
   });
 
-  function handleFilter(key, value) {
-    setSearchParams((prevParams) => {
-      if (!prevParams.has(key)) {
-        prevParams.append(key, value);
-      } else {
-        prevParams.delete(key);
-      }
-      return prevParams;
-    });
-  }
   if (error) return <h1>There was an error: {error.message}</h1>;
   return (
     <div className="van-page">
@@ -106,6 +153,15 @@ export default function Vans() {
         <NavLink to="." className="filters-clear">
           Clear filters
         </NavLink>
+      </div>
+      <div className="sorting-container">
+        <h3>Sort vans</h3>
+        <select name="sort-vans" id="sort-vans" onChange={(e) => sortVans(e)}>
+          <option value="low-high">Price Low-High</option>
+          <option value="high-low">Price High-Low</option>
+
+          <option value="rating">By Rating</option>
+        </select>
       </div>
 
       <main className="vans-container">{VanElements}</main>

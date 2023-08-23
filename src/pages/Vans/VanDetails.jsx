@@ -18,11 +18,12 @@ export default function VanDetails() {
   const { vanData, currentUser, setPopupOpen, setPopupText } =
     useContext(VanApiContext);
 
+  //have to change this if i stop fetching all vans
   const currentVanArr = vanData.filter((item) => item.id == params.id);
   const currentVan = currentVanArr[0];
-  const ratingsObj = currentVan.ratings;
+  const ratingsObj = currentVan?.ratings;
 
-  const commentElements = currentVan.comments.map((item, index) => {
+  const commentElements = currentVan?.comments.map((item, index) => {
     if (!item?.visible) return;
     return <Comments key={index} comment={item} />;
   });

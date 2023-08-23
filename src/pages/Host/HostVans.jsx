@@ -55,7 +55,7 @@ export default function HostVans() {
       ratings: {},
       rented: [],
       type: "simple",
-      visibility: "public",
+      visibility: "private",
       deletable: true,
     };
 
