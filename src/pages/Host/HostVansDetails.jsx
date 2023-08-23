@@ -1,19 +1,12 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  Outlet,
-  useParams,
-  NavLink,
-  Link,
-  useOutletContext,
-} from "react-router-dom";
+import { useContext } from "react";
+import { Outlet, useParams, Link, useOutletContext } from "react-router-dom";
 import { VanApiContext } from "../../App";
 import Comments from "../../components/Comments";
-import { removeCommentAt, removeVan, toggleCommentVisibility } from "../../api";
-import ConfirmPopup from "../../components/ConfirmPopup";
+import { removeCommentAt, toggleCommentVisibility } from "../../api";
 
 export default function HostVansDetails() {
   const { currentUser } = useContext(VanApiContext);
-  const [confirmPopupOpen, setConfirmPopupOpen] = useState(false);
+
   const hostId = currentUser.uid;
   const params = useParams();
   const [hostVansData, error] = useOutletContext();
@@ -61,29 +54,8 @@ export default function HostVansDetails() {
     );
   });
 
-  function deleteVan() {
-    try {
-      removeVan(vanDetail.id);
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  function confirmDelete() {
-    setConfirmPopupOpen(true);
-  }
-
   return (
     <>
-      {confirmPopupOpen && (
-        <ConfirmPopup
-          callback={deleteVan}
-          confirmPopupOpen={confirmPopupOpen}
-          setConfirmPopupOpen={setConfirmPopupOpen}
-        >
-          Are you shure you want to delete {vanDetail.name}?
-        </ConfirmPopup>
-      )}
       <Link relative="path" to=".." className="back-button">
         &larr; <span>Back to all vans</span>
       </Link>
@@ -105,12 +77,7 @@ export default function HostVansDetails() {
         </div>
 
         <Outlet context={{ vanDetail }} />
-        {/* <button
-          className="confirm-button big delete-van"
-          onClick={confirmDelete}
-        >
-          Delete Van
-        </button> */}
+
         <div className="host-comments"> {commentElements}</div>
       </div>
     </>

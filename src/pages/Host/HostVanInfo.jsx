@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Navigate, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { removeVan, storeVanData } from "../../api";
 import { VanApiContext } from "../../App";
 import ConfirmPopup from "../../components/ConfirmPopup";
