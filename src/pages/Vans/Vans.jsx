@@ -111,7 +111,7 @@ export default function Vans() {
       </Link>
     );
   });
-
+  console.log(vanData);
   if (error) return <h1>There was an error: {error.message}</h1>;
   return (
     <div className="van-page">
