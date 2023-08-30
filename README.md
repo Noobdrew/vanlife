@@ -1,4 +1,4 @@
-<h1>VanLife</h1>
+<h1><a href="https://willowy-otter-c9cca4.netlify.app/profile">VanLife</a></h1>
 
 Welcome to the Van Rental Service website! This platform allows users to rent vans, manage their van listings, post comments and ratings, track income, and update their account information. The website is built using React, React Router, Chart.js, and Firebase to provide a seamless and user-friendly experience.
 
@@ -27,14 +27,14 @@ The dashboard provides an overview of a user's account activity, including their
 
 <h2>Technologies Used</h2>
 
-<h3>* React:</h3> 
-The website's frontend is built using React, allowing for a dynamic and responsive user interface.
+- <h3>React:</h3> 
+  The website's frontend is built using React, allowing for a dynamic and responsive user interface.
 
-<h3>* React Router:</h3> 
-React Router is used to handle client-side routing, enabling smooth navigation between different sections of the website.
+- <h3>React Router:</h3> 
+  React Router is used to handle client-side routing, enabling smooth navigation between different sections of the website.
 
-<h3>* Chart.js:</h3> 
-Chart.js is utilized to create interactive and visually appealing charts that display the van income over the last year.
+- <h3>Chart.js:</h3> 
+  Chart.js is utilized to create interactive and visually appealing charts that display the van income over the last year.
 
-<h3>* Firebase:</h3> 
-Firebase is used for user authentication, real-time database management, and cloud storage for van images.
+- <h3>Firebase:</h3> 
+  Firebase is used for user authentication, real-time database management, and cloud storage for van images.
