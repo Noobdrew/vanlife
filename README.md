@@ -2,6 +2,7 @@
 
 Welcome to VanLife! This platform allows users to rent vans, manage their van listings, post comments and ratings, track income, and update their account information. The website is built using React, React Router, Chart.js, and Firebase to provide a seamless and user-friendly experience.
 
+<img src="./src/assets/vanlife-main.png" alt="vanlife main pages">
 <h2>Features</h2>
 
 <h3>1. User Accounts:</h3> 
