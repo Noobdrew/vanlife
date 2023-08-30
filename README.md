@@ -1,6 +1,6 @@
 <h1><a href="https://willowy-otter-c9cca4.netlify.app">VanLife</a></h1>
 
-Welcome to the Van Rental Service website! This platform allows users to rent vans, manage their van listings, post comments and ratings, track income, and update their account information. The website is built using React, React Router, Chart.js, and Firebase to provide a seamless and user-friendly experience.
+Welcome to VanLife! This platform allows users to rent vans, manage their van listings, post comments and ratings, track income, and update their account information. The website is built using React, React Router, Chart.js, and Firebase to provide a seamless and user-friendly experience.
 
 <h2>Features</h2>
 
